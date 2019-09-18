@@ -59,6 +59,13 @@ final public class Matriks {
         Mat[b] = temp;
     }
 
+    // Perkalian Baris dengan sebuah integer
+    public void KaliBaris(int n, int a){
+        for(int i = 0; i <= Kolom; i++){
+            Mat[n][i] *= a;
+        }
+    }
+
     // Determinan
     // I.S : Martriks valid persegi
     public double Determinan(Matriks M) {

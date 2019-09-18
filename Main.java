@@ -5,5 +5,7 @@ public class Main {
 
         M.BacaMat();
         M.TulisMat();
+        M.Swap(0,1);
+        M.TulisMat();
     }
 }

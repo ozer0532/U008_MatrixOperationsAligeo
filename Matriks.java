@@ -66,6 +66,22 @@ final public class Matriks {
         }
     }
 
+    // Penjumlahan Baris
+    // Baris ke-a ditambah dengan bilangan di baris ke-b
+    public void PlusBaris(int a, int b){
+        for(int i = 0; i <= Kolom; i++){
+            Mat[a][i] += Mat[b][i];
+        }
+    }
+
+    // Pengurangan Baris
+    // Baris ke-a dikurangi dengan bilangan di baris ke-b
+    public void MinusBaris(int a, int b){
+        for(int i = 0; i <= Kolom; i++){
+            Mat[a][i] -= Mat[b][i];
+        }
+    }
+
     // Determinan
     // I.S : Martriks valid persegi
     public double Determinan(Matriks M) {

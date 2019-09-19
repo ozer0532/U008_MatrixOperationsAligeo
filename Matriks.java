@@ -4,6 +4,8 @@ final public class Matriks {
     Scanner scanner = new Scanner(System.in); // Untuk Input
     public int KolMin = 0;
     public int BrsMin = 0;
+    public int KolMax = 100;
+    public int BrsMax = 100;
     private final int Baris; // Baris
     private final int Kolom; // Kolom
     public double[][] Mat; // isi array, double biar threadsafe
@@ -82,23 +84,23 @@ final public class Matriks {
         Mat[Brs2] = temp;
     }
 
-    public void KaliBaris(int Baris, int x) {
-        // Perkalian Baris dengan sebuah integer
-        for (int i = 0; i <= Kolom; i++) {
+    public void KaliBaris(int Baris, double x) {
+        // Perkalian Baris dengan sebuah bilangan real
+        for (int i = 0; i < Kolom; i++) {
             Mat[Baris][i] *= x;
         }
     }
 
     public void PlusBaris(int Baris1, int Baris2) {
         // Baris ke-a ditambah dengan bilangan di baris ke-b
-        for (int i = 0; i <= Kolom; i++) {
+        for (int i = 0; i < Kolom; i++) {
             Mat[Baris1][i] += Mat[Baris2][i];
         }
     }
 
     public void MinusBaris(int a, int b) {
         // Baris ke-a dikurangi dengan bilangan di baris ke-b
-        for (int i = 0; i <= Kolom; i++) {
+        for (int i = 0; i < Kolom; i++) {
             Mat[a][i] -= Mat[b][i];
         }
     }
@@ -136,5 +138,23 @@ final public class Matriks {
         }
 
         return det;
+    }
+
+    public static void EliminasiGauss(Matriks M) {
+        
+        for (int i = M.GetFirstIdxKol(M); i <= M.GetLastIdxKol(M); i++) {
+            // Ubah angka depan jadi 1
+            M.KaliBaris(i, 1/M.Mat[i][i + M.GetFirstIdxKol(M)]);
+            M.TulisMat();
+
+            // Pengurangan baris dibawahnya
+            for (int j = i + 1; j <= M.GetLastIdxKol(M); j++) {   
+                M.KaliBaris(j, 1/M.Mat[j][i + M.GetFirstIdxKol(M)]);
+                M.TulisMat();
+                M.MinusBaris(j, i);
+            }
+            System.out.print("\n");
+        }
+        
     }
 }

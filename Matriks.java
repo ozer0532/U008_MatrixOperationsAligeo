@@ -39,11 +39,11 @@ final public class Matriks {
     }
 
     public int GetLastIdxBrs(Matriks M) {
-        return M.Baris - 1;
+        return M.Baris ;
     }
 
     public int GetLastIdxKol(Matriks M) {
-        return M.Kolom - 1;
+        return M.Kolom ;
     }
 
     public int NbElmt(Matriks M) {

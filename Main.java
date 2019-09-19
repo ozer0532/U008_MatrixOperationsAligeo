@@ -1,12 +1,18 @@
+import java.util.*;
+
 public class Main {
 
     public static void main(String[] args) {
-        Matriks M = new Matriks(3, 3);
+        Scanner scanner = new Scanner(System.in); // Untuk Input
+
+        int n = scanner.nextInt();
+        int m = scanner.nextInt();
+        Matriks M = new Matriks(n, m);
 
         M.BacaMat();
         M.TulisMat();
         System.out.println();
-        double a = M.Determinan(M);
+        double a = M.Determinan();
         System.out.println(a);
         M.Swap(0, 1);
         M.TulisMat();

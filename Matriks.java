@@ -17,6 +17,16 @@ final public class Matriks {
         this.Mat = new double[baris][kolom];
     }
 
+    public Matriks(double[][] Mat) {
+        // Konstruktor dari tabel
+        this.Baris = Mat.length;
+        this.Kolom = Mat[0].length;
+        this.Mat = new double[Mat.length][Mat[0].length];
+        for (int i = 0; i < Mat.length; i++)
+            for (int j = 0; j < Mat[0].length; j++)
+                this.Mat[i][j] = Mat[i][j];
+    }
+
     // Selektor
     public int GetFirstIdxBrs(Matriks M) {
         return BrsMin;
@@ -36,16 +46,6 @@ final public class Matriks {
 
     public int NbElmt(Matriks M) {
         return (M.Baris * M.Kolom);
-    }
-
-    public Matriks(double[][] Mat) {
-        // Konstruktor dari tabel
-        this.Baris = Mat.length;
-        this.Kolom = Mat[0].length;
-        this.Mat = new double[Mat.length][Mat[0].length];
-        for (int i = 0; i < Mat.length; i++)
-            for (int j = 0; j < Mat[0].length; j++)
-                this.Mat[i][j] = Mat[i][j];
     }
 
     public static Matriks Identitas(int N) {
@@ -122,17 +122,18 @@ final public class Matriks {
     }
 
     // Determinan
-    public double Determinan(Matriks M) {
+    public double Determinan() {
         /* Prekondisi: M bujur sangkar */
         /* Menghitung nilai determinan M */
         double det;
 
-        if ((M.Baris == 1) && (M.Kolom == 1)) // Basis 1x1
-            det = M.Mat[0][0];
+        if ((this.Baris == 1) && (this.Kolom == 1)) // Basis 1x1
+            det = this.Mat[0][0];
         else { // Rekurens nxn
             det = 0;
-            for (int i = GetFirstIdxBrs(M); i <= GetLastIdxBrs(M); i++)
-                det += (i % 2 == 1 ? 1 : -1) * M.Mat[i][GetFirstIdxKol(M)] * Determinan(Minor(M, i, GetFirstIdxKol(M)));
+            for (int i = GetFirstIdxBrs(this); i <= GetLastIdxBrs(this); i++)
+                det += (i % 2 == 1 ? 1 : -1) * this.Mat[i][GetFirstIdxKol(this)]
+                        * Minor(this, i, GetFirstIdxKol(this)).Determinan();
         }
 
         return det;

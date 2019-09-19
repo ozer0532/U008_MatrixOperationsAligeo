@@ -86,21 +86,21 @@ final public class Matriks {
 
     public void KaliBaris(int Baris, double x) {
         // Perkalian Baris dengan sebuah bilangan real
-        for (int i = 0; i < Kolom; i++) {
+        for (int i = 0; i <= Kolom; i++) {
             Mat[Baris][i] *= x;
         }
     }
 
     public void PlusBaris(int Baris1, int Baris2) {
         // Baris ke-a ditambah dengan bilangan di baris ke-b
-        for (int i = 0; i < Kolom; i++) {
+        for (int i = 0; i <= Kolom; i++) {
             Mat[Baris1][i] += Mat[Baris2][i];
         }
     }
 
     public void MinusBaris(int a, int b) {
         // Baris ke-a dikurangi dengan bilangan di baris ke-b
-        for (int i = 0; i < Kolom; i++) {
+        for (int i = 0; i <= Kolom; i++) {
             Mat[a][i] -= Mat[b][i];
         }
     }

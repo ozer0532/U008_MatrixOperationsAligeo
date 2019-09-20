@@ -39,11 +39,11 @@ final public class Matriks {
     }
 
     public int GetLastIdxBrs(Matriks M) {
-        return M.Baris ;
+        return M.Baris - 1;
     }
 
     public int GetLastIdxKol(Matriks M) {
-        return M.Kolom ;
+        return M.Kolom - 1;
     }
 
     public int NbElmt(Matriks M) {
@@ -86,25 +86,26 @@ final public class Matriks {
 
     public void KaliBaris(int Baris, double x) {
         // Perkalian Baris dengan sebuah bilangan real
-        for (int i = 0; i <= Kolom; i++) {
+        for (int i = 0; i < Kolom; i++) {
             Mat[Baris][i] *= x;
         }
     }
 
     public void PlusBaris(int Baris1, int Baris2) {
         // Baris ke-a ditambah dengan bilangan di baris ke-b
-        for (int i = 0; i <= Kolom; i++) {
+        for (int i = 0; i < Kolom; i++) {
             Mat[Baris1][i] += Mat[Baris2][i];
         }
     }
 
     public void MinusBaris(int a, int b) {
         // Baris ke-a dikurangi dengan bilangan di baris ke-b
-        for (int i = 0; i <= Kolom; i++) {
+        for (int i = 0; i < Kolom; i++) {
             Mat[a][i] -= Mat[b][i];
         }
     }
 
+    
     private Matriks Minor(Matriks M, int i, int j) {
         // Minor M(i,j) dari matriks M
         Matriks Minor = new Matriks(M.Baris - 1, M.Kolom - 1);
@@ -134,7 +135,7 @@ final public class Matriks {
         else { // Rekurens nxn
             det = 0;
             for (int i = GetFirstIdxBrs(this); i <= GetLastIdxBrs(this); i++)
-                det += (i % 2 == 1 ? 1 : -1) * this.Mat[i][GetFirstIdxKol(this)]
+                det += (i % 2 == 0 ? 1 : -1) * this.Mat[i][GetFirstIdxKol(this)]
                         * Minor(this, i, GetFirstIdxKol(this)).Determinan();
         }
 

@@ -142,6 +142,15 @@ final public class Matriks {
         return det;
     }
 
+    private Matriks Cofaktor(Matriks M){
+        Matriks temp = new Matriks(M.Baris, M.Kolom);
+        for (int i = 0; i < M.Baris; i++)
+            for (int j = 0; i < M.Kolom; j++){
+                
+            }
+        return temp;
+    }
+
     public static void EliminasiGauss(Matriks M) {
         
         for (int i = M.GetFirstIdxKol(M); i <= M.GetLastIdxKol(M); i++) {

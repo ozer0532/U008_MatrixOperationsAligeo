@@ -1,13 +1,13 @@
 import java.util.*;
 
-final public class Matriks {
+public class Matriks {
     Scanner scanner = new Scanner(System.in); // Untuk Input
     public int KolMin = 0;
     public int BrsMin = 0;
     public int KolMax = 100;
     public int BrsMax = 100;
-    private final int Baris; // Baris
-    private final int Kolom; // Kolom
+    private int Baris; // Baris
+    private int Kolom; // Kolom
     public double[][] Mat; // isi array, double biar threadsafe
     // Manggil isi matriks-nya matriks.Mat[Baris][Kolom]
     // Indeks Baris & Kolom mulai dari 0
@@ -71,6 +71,7 @@ final public class Matriks {
     public void TulisMat() {
         for (int i = 0; i < this.Baris; i++) {
             for (int j = 0; j < this.Kolom; j++) {
+                this.Mat[i][j] += 0; // Agar tidak ada (-0)
                 System.out.printf("%.2f ", this.Mat[i][j]);
             }
             System.out.print("\n");
@@ -105,7 +106,6 @@ final public class Matriks {
         }
     }
 
-    
     private Matriks Minor(Matriks M, int i, int j) {
         // Minor M(i,j) dari matriks M
         Matriks Minor = new Matriks(M.Baris - 1, M.Kolom - 1);
@@ -142,30 +142,48 @@ final public class Matriks {
         return det;
     }
 
-    private Matriks Cofaktor(Matriks M){
+    private Matriks Cofaktor(Matriks M) {
         Matriks temp = new Matriks(M.Baris, M.Kolom);
         for (int i = 0; i < M.Baris; i++)
-            for (int j = 0; i < M.Kolom; j++){
-                
+            for (int j = 0; i < M.Kolom; j++) {
+
             }
         return temp;
     }
 
     public static void EliminasiGauss(Matriks M) {
-        
-        for (int i = M.GetFirstIdxKol(M); i <= M.GetLastIdxKol(M); i++) {
+
+        for (int i = M.GetFirstIdxKol(M); i < M.GetLastIdxKol(M); i++) {
             // Ubah angka depan jadi 1
-            M.KaliBaris(i, 1/M.Mat[i][i + M.GetFirstIdxKol(M)]);
+            M.KaliBaris(i, 1 / M.Mat[i][i + M.GetFirstIdxKol(M)]);
             M.TulisMat();
 
             // Pengurangan baris dibawahnya
-            for (int j = i + 1; j <= M.GetLastIdxKol(M); j++) {   
-                M.KaliBaris(j, 1/M.Mat[j][i + M.GetFirstIdxKol(M)]);
+            for (int j = i + 1; j < M.GetLastIdxKol(M); j++) {
+                M.KaliBaris(j, 1 / M.Mat[j][i + M.GetFirstIdxKol(M)]);
                 M.TulisMat();
                 M.MinusBaris(j, i);
             }
             System.out.print("\n");
         }
-        
+    }
+
+    public void Transpose() {
+        /* I.S. M terdefinisi dan IsBujursangkar(M) */
+        /*
+         * F.S. M "di-transpose", yaitu setiap elemen M(i,j) ditukar nilainya dengan
+         * elemen M(j,i)
+         */
+        Matriks M1 = new Matriks(this.Kolom, this.Baris);
+
+        for (int i = GetFirstIdxBrs(M1); i <= GetLastIdxBrs(M1); i++) {
+            for (int j = GetFirstIdxKol(M1); j <= GetLastIdxKol(M1); j++) {
+                M1.Mat[i][j] = this.Mat[j][i];
+            }
+        }
+
+        this.Baris = M1.Baris;
+        this.Kolom = M1.Kolom;
+        this.Mat = M1.Mat;
     }
 }

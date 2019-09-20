@@ -14,7 +14,8 @@ public class Main {
         System.out.println();
         double a = M.Determinan();
         System.out.println(a);
-        M.Swap(0, 1);
+        // M.Swap(0, 1);
+        M.EliminasiGauss(M);
         M.TulisMat();
     }
 }

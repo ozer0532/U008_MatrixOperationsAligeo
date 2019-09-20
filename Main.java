@@ -10,12 +10,14 @@ public class Main {
         Matriks M = new Matriks(n, m);
 
         M.BacaMat();
+        M.EliminasiGaussJordan(M);
         M.TulisMat();
         System.out.println();
-        double a = M.Determinan();
+        double a = M.DeterminanCofaktor(M);
         System.out.println(a);
         // M.Swap(0, 1);
-        M.EliminasiGauss(M);
         M.TulisMat();
+
+        scanner.close();
     }
 }

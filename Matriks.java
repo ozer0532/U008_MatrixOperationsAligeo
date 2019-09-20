@@ -92,18 +92,26 @@ public class Matriks {
         }
     }
 
-    public void PlusBaris(int Baris1, int Baris2) {
+    public void PlusBaris(int Baris1, int Baris2, double k) {
         // Baris ke-a ditambah dengan bilangan di baris ke-b
         for (int i = 0; i < Kolom; i++) {
-            Mat[Baris1][i] += Mat[Baris2][i];
+            Mat[Baris1][i] += Mat[Baris2][i] * k;
         }
+    }
+
+    public void PlusBaris(int Baris1, int Baris2) {
+        // Baris ke-a ditambah dengan bilangan di baris ke-b
+        PlusBaris(Baris1, Baris2, 1);
+    }
+
+    public void MinusBaris(int a, int b, double k) {
+        // Baris ke-a dikurangi dengan bilangan di baris ke-b * k
+        PlusBaris(a, b, -k);
     }
 
     public void MinusBaris(int a, int b) {
         // Baris ke-a dikurangi dengan bilangan di baris ke-b
-        for (int i = 0; i < Kolom; i++) {
-            Mat[a][i] -= Mat[b][i];
-        }
+        MinusBaris(a, b, 1);
     }
 
     private Matriks Minor(Matriks M, int i, int j) {
@@ -125,46 +133,99 @@ public class Matriks {
     }
 
     // Determinan
-    public double Determinan() {
+    public double DeterminanCofaktor(Matriks M) {
         /* Prekondisi: M bujur sangkar */
         /* Menghitung nilai determinan M */
         double det;
 
-        if ((this.Baris == 1) && (this.Kolom == 1)) // Basis 1x1
-            det = this.Mat[0][0];
+        if ((M.Baris == 1) && (M.Kolom == 1)) // Basis 1x1
+            det = M.Mat[0][0];
         else { // Rekurens nxn
             det = 0;
-            for (int i = GetFirstIdxBrs(this); i <= GetLastIdxBrs(this); i++)
-                det += (i % 2 == 0 ? 1 : -1) * this.Mat[i][GetFirstIdxKol(this)]
-                        * Minor(this, i, GetFirstIdxKol(this)).Determinan();
+            for (int i = GetFirstIdxBrs(M); i <= GetLastIdxBrs(M); i++)
+                det += M.Mat[i][GetFirstIdxKol(M)] * Cofaktor(M, i, GetFirstIdxKol(M));
         }
 
         return det;
     }
 
-    private Matriks Cofaktor(Matriks M) {
-        Matriks temp = new Matriks(M.Baris, M.Kolom);
-        for (int i = 0; i < M.Baris; i++)
-            for (int j = 0; i < M.Kolom; j++) {
-
-            }
-        return temp;
+    private double Cofaktor(Matriks M, int i, int j) {
+        return DeterminanCofaktor(Minor(M, i, j)) * (((i+j)%2==0)?1:-1);
     }
 
-    public static void EliminasiGauss(Matriks M) {
-
-        for (int i = M.GetFirstIdxKol(M); i < M.GetLastIdxKol(M); i++) {
-            // Ubah angka depan jadi 1
-            M.KaliBaris(i, 1 / M.Mat[i][i + M.GetFirstIdxKol(M)]);
-            M.TulisMat();
-
-            // Pengurangan baris dibawahnya
-            for (int j = i + 1; j < M.GetLastIdxKol(M); j++) {
-                M.KaliBaris(j, 1 / M.Mat[j][i + M.GetFirstIdxKol(M)]);
-                M.TulisMat();
-                M.MinusBaris(j, i);
+    public void EliminasiGauss(Matriks M) {
+        // I.S. M terdefinisi
+        // F.S. M diubah menjadi matriks eselonnya
+        // Proses: Eliminasi Gauss
+        
+        // Proses mengurutkan baris
+        int[] zeroCount = new int[M.Baris];
+        for (int i = 0; i < M.Baris; i++) {         // Kalkulasi jumlah 0
+            zeroCount[i] = 0;
+            int j = 0;
+            while (j < M.Kolom && M.Mat[i][j] == 0) {
+                zeroCount[i]++;
+                j++;
             }
-            System.out.print("\n");
+        }
+        for (int i = 0; i < M.Baris; i++) {         // Algoritma Pengurutan
+            for (int j = 0; j < M.Baris - 1; j++) {
+                if (zeroCount[j] > zeroCount[j+1]) {
+                    int temp;
+                    M.Swap(j, j+1);
+                    temp = zeroCount[j];
+                    zeroCount[j] = zeroCount[j+1];
+                    zeroCount[j+1] = temp;
+                }
+            }
+        }
+
+        // Proses mereduksi baris
+        int indent = 0;
+
+        for (int i = 0; i < M.Baris; i++) {
+            // Mencari sel bernilai
+            while (i + indent < M.Kolom && M.Mat[i][i + indent] == 0) {
+                indent++;
+            }
+                
+            if (i + indent < M.Kolom) {
+                // Ubah angka depan jadi 1
+                M.KaliBaris(i, 1 / M.Mat[i][i + indent]);
+
+                // Pengurangan baris dibawahnya
+                for (int j = i + 1; j < Baris; j++) {
+                    if (M.Mat[j][i + indent] != 0) {
+                        M.KaliBaris(j, 1 / M.Mat[j][i + indent]);
+                        M.MinusBaris(j, i);
+                    }
+                }
+            }
+        }
+    }
+
+    public void EliminasiGaussJordan(Matriks M) {
+        // I.S. M terdefinisi
+        // F.S. M diubah menjadi matriks eselon-terreduksinya
+        // Proses: Eliminasi Gauss Jordan
+        EliminasiGauss(M);
+        int indent = 0;
+
+        for (int i = 0; i < Baris; i++) {
+            // Pencarian sel tidak nol
+            while (i + indent < M.Kolom && M.Mat[i][i + indent] == 0) {
+                indent++;
+            }
+
+            if (i + indent < M.Kolom) {
+
+                // Pengurangan baris diatasnya
+                for (int j = i - 1; j >= 0; j--) {
+                    if (M.Mat[j][i + indent] != 0) {
+                        M.MinusBaris(j, i, M.Mat[j][i + indent]);
+                    }
+                }
+            }
         }
     }
 

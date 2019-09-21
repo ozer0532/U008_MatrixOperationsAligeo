@@ -262,4 +262,5 @@ public class Matriks {
         this.MatCofaktor();
         this.Transpose();
     }
+    
 }

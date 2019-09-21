@@ -263,4 +263,15 @@ public class Matriks {
         this.Transpose();
     }
     
+    public void CopyMatriks(Matriks dari, Matriks ke) {
+        ke.Baris = dari.Baris;
+        ke.Kolom = dari.Kolom;
+        ke.Mat = new double[dari.Baris][dari.Kolom];
+        
+        for (int i = 0; i < ke.Baris; i++) {
+            for (int j = 0; j < ke.Kolom; j++) {
+                ke.Mat[i][j] = dari.Mat[i][j];
+            }
+        }
+    }
 }

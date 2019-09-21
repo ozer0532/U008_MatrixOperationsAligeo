@@ -10,7 +10,8 @@ public class Main {
         Matriks M = new Matriks(n, m);
 
         M.BacaMat();
-        M.EliminasiGaussJordan(M);
+        // M.EliminasiGaussJordan(M);
+        // M.Adjoin();
         M.TulisMat();
         System.out.println();
         double a = M.DeterminanCofaktor(M);

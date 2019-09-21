@@ -247,4 +247,19 @@ public class Matriks {
         this.Kolom = M1.Kolom;
         this.Mat = M1.Mat;
     }
+
+    public void MatCofaktor(){
+        Matriks M = new Matriks(this.Kolom, this.Baris);
+        for (int i = GetFirstIdxBrs(this); i <= GetLastIdxBrs(this); i++) 
+            for (int j = GetFirstIdxKol(this); j <= GetLastIdxKol(this); j++) {
+                M.Mat[i][j] = Cofaktor(this, i, j);
+            }
+        this.Mat = M.Mat;
+    }
+
+    // Masih salah hasilnya
+    public void Adjoin(){
+        this.MatCofaktor();
+        this.Transpose();
+    }
 }

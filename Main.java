@@ -12,8 +12,7 @@ public class Main {
 
         M.BacaMat();
         // M.Adjoin();
-        M.CopyMatriks(M, N);
-        M.EliminasiGaussJordan(M);
+        N = Matriks.EliminasiGaussJordan(M);
         M.TulisMat();
         N.TulisMat();
         System.out.println();

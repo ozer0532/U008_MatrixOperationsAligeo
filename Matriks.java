@@ -12,7 +12,7 @@ public class Matriks {
     // Manggil isi matriks-nya matriks.Mat[Baris][Kolom]
     // Indeks Baris & Kolom mulai dari 0
 
-    // Konstruktor
+    /* ********** KONSTRUKTOR ********** */ 
     public Matriks(int baris, int kolom) {
         this.Baris = baris;
         this.Kolom = kolom;
@@ -29,7 +29,7 @@ public class Matriks {
                 this.Mat[i][j] = Mat[i][j];
     }
 
-    // Selektor
+    /* ********** SELEKTOR ********** */ 
     public int GetFirstIdxBrs(Matriks M) {
         return BrsMin;
     }
@@ -50,6 +50,7 @@ public class Matriks {
         return (M.Baris * M.Kolom);
     }
 
+    /* ********** TIPE MATRIKS UMUM ********** */ 
     public static Matriks Identitas(int N) {
         Matriks I = new Matriks(N, N);
         for (int i = 0; i < N; i++)
@@ -57,6 +58,7 @@ public class Matriks {
         return I;
     }
 
+    /* ********** INPUT/OUTPUT MATRIKS ********** */ 
     // Baca Matriks
     public void BacaMat() {
         for (int i = 0; i < this.Baris; i++) {
@@ -78,6 +80,7 @@ public class Matriks {
         }
     }
 
+    /* ********** OPERASI BARIS ELEMENTER ********** */ 
     // Nuker Baris
     public void Swap(int Brs1, int Brs2) {
         double[] temp = Mat[Brs1];
@@ -114,24 +117,7 @@ public class Matriks {
         MinusBaris(a, b, 1);
     }
 
-    private Matriks Minor(Matriks M, int i, int j) {
-        // Minor M(i,j) dari matriks M
-        Matriks Minor = new Matriks(M.Baris - 1, M.Kolom - 1);
-        int iMi, jMi, iM, jM;
-        iMi = GetFirstIdxBrs(Minor);
-        for (iM = GetFirstIdxBrs(M); iM <= GetLastIdxBrs(M); iM++)
-            if (iM != i) {
-                jMi = GetFirstIdxKol(Minor);
-                for (jM = GetFirstIdxKol(M); jM <= GetLastIdxKol(M); jM++)
-                    if (jM != GetFirstIdxKol(M)) {
-                        Minor.Mat[iMi][jMi] = M.Mat[iM][jM];
-                        jMi++;
-                    }
-                iMi++;
-            }
-        return Minor;
-    }
-
+    /* ********** FUNGSI SKALAR ********** */
     // Determinan
     public double DeterminanCofaktor(Matriks M) {
         /* Prekondisi: M bujur sangkar */
@@ -153,11 +139,68 @@ public class Matriks {
         return DeterminanCofaktor(Minor(M, i, j)) * (((i+j)%2==0)?1:-1);
     }
 
-    public void EliminasiGauss(Matriks M) {
+    /* ********** MANIPULASI MATRIKS ********** */
+    private Matriks Minor(Matriks M, int i, int j) {
+        // Minor M(i,j) dari matriks M
+        Matriks Minor = new Matriks(M.Baris - 1, M.Kolom - 1);
+        int iMi, jMi, iM, jM;
+        iMi = GetFirstIdxBrs(Minor);
+        for (iM = GetFirstIdxBrs(M); iM <= GetLastIdxBrs(M); iM++)
+            if (iM != i) {
+                jMi = GetFirstIdxKol(Minor);
+                for (jM = GetFirstIdxKol(M); jM <= GetLastIdxKol(M); jM++)
+                    if (jM != GetFirstIdxKol(M)) {
+                        Minor.Mat[iMi][jMi] = M.Mat[iM][jM];
+                        jMi++;
+                    }
+                iMi++;
+            }
+        return Minor;
+    }
+
+    public void Transpose() {
+        /* I.S. M terdefinisi dan IsBujursangkar(M) */
+        /*
+         * F.S. M "di-transpose", yaitu setiap elemen M(i,j) ditukar nilainya dengan
+         * elemen M(j,i)
+         */
+        Matriks M1 = new Matriks(this.Kolom, this.Baris);
+
+        for (int i = GetFirstIdxBrs(M1); i <= GetLastIdxBrs(M1); i++) {
+            for (int j = GetFirstIdxKol(M1); j <= GetLastIdxKol(M1); j++) {
+                M1.Mat[i][j] = this.Mat[j][i];
+            }
+        }
+
+        this.Baris = M1.Baris;
+        this.Kolom = M1.Kolom;
+        this.Mat = M1.Mat;
+    }
+
+    public void MatCofaktor(){
+        Matriks M = new Matriks(this.Kolom, this.Baris);
+        for (int i = GetFirstIdxBrs(this); i <= GetLastIdxBrs(this); i++) 
+            for (int j = GetFirstIdxKol(this); j <= GetLastIdxKol(this); j++) {
+                M.Mat[i][j] = Cofaktor(this, i, j);
+            }
+        this.Mat = M.Mat;
+    }
+
+    // Masih salah hasilnya
+    public void Adjoin(){
+        this.MatCofaktor();
+        this.Transpose();
+    }
+
+    public static Matriks EliminasiGauss(Matriks in) {
         // I.S. M terdefinisi
         // F.S. M diubah menjadi matriks eselonnya
         // Proses: Eliminasi Gauss
         
+        // Inisialisasi
+        Matriks M = new Matriks(1,1);
+        M = Copy(in);
+
         // Proses mengurutkan baris
         int[] zeroCount = new int[M.Baris];
         for (int i = 0; i < M.Baris; i++) {         // Kalkulasi jumlah 0
@@ -194,7 +237,7 @@ public class Matriks {
                 M.KaliBaris(i, 1 / M.Mat[i][i + indent]);
 
                 // Pengurangan baris dibawahnya
-                for (int j = i + 1; j < Baris; j++) {
+                for (int j = i + 1; j < M.Baris; j++) {
                     if (M.Mat[j][i + indent] != 0) {
                         M.KaliBaris(j, 1 / M.Mat[j][i + indent]);
                         M.MinusBaris(j, i);
@@ -202,16 +245,19 @@ public class Matriks {
                 }
             }
         }
+        return M;
     }
 
-    public void EliminasiGaussJordan(Matriks M) {
+    public static Matriks EliminasiGaussJordan(Matriks in) {
         // I.S. M terdefinisi
         // F.S. M diubah menjadi matriks eselon-terreduksinya
         // Proses: Eliminasi Gauss Jordan
-        EliminasiGauss(M);
+
+        // Proses
+        Matriks M = EliminasiGauss(in);
         int indent = 0;
 
-        for (int i = 0; i < Baris; i++) {
+        for (int i = 0; i < M.Baris; i++) {
             // Pencarian sel tidak nol
             while (i + indent < M.Kolom && M.Mat[i][i + indent] == 0) {
                 indent++;
@@ -227,43 +273,13 @@ public class Matriks {
                 }
             }
         }
-    }
-
-    public void Transpose() {
-        /* I.S. M terdefinisi dan IsBujursangkar(M) */
-        /*
-         * F.S. M "di-transpose", yaitu setiap elemen M(i,j) ditukar nilainya dengan
-         * elemen M(j,i)
-         */
-        Matriks M1 = new Matriks(this.Kolom, this.Baris);
-
-        for (int i = GetFirstIdxBrs(M1); i <= GetLastIdxBrs(M1); i++) {
-            for (int j = GetFirstIdxKol(M1); j <= GetLastIdxKol(M1); j++) {
-                M1.Mat[i][j] = this.Mat[j][i];
-            }
-        }
-
-        this.Baris = M1.Baris;
-        this.Kolom = M1.Kolom;
-        this.Mat = M1.Mat;
-    }
-
-    public void MatCofaktor(){
-        Matriks M = new Matriks(this.Kolom, this.Baris);
-        for (int i = GetFirstIdxBrs(this); i <= GetLastIdxBrs(this); i++) 
-            for (int j = GetFirstIdxKol(this); j <= GetLastIdxKol(this); j++) {
-                M.Mat[i][j] = Cofaktor(this, i, j);
-            }
-        this.Mat = M.Mat;
-    }
-
-    // Masih salah hasilnya
-    public void Adjoin(){
-        this.MatCofaktor();
-        this.Transpose();
+        
+        return M;
     }
     
-    public void CopyMatriks(Matriks dari, Matriks ke) {
+    public static void  Copy(Matriks dari, Matriks ke) {
+        // I.S. dari dan ke terdefinisi
+        // F.S. ke berisi sama dengan dari
         ke.Baris = dari.Baris;
         ke.Kolom = dari.Kolom;
         ke.Mat = new double[dari.Baris][dari.Kolom];
@@ -273,5 +289,17 @@ public class Matriks {
                 ke.Mat[i][j] = dari.Mat[i][j];
             }
         }
+    }
+
+    // Varian fungsi dari Copy Matriks diatas
+    public static Matriks Copy(Matriks dari) {
+        Matriks ke = new Matriks(1, 1);
+        Copy(dari, ke);
+        return ke;
+    }
+
+    // BELOM KELAR
+    public static Matriks ConcatHorizontally(Matriks M, Matriks N) {
+        return new Matriks(1,1);
     }
 }

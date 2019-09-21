@@ -11,10 +11,12 @@ public class Main {
         Matriks N = new Matriks(1, 1);
 
         M.BacaMat();
-        // M.Adjoin();
-        N = Matriks.EliminasiGaussJordan(M);
-        M.TulisMat();
-        N.TulisMat();
+        if (Matriks.InversGaussJordan(M, N)) {
+            M.TulisMat();
+            N.TulisMat();
+        } else {
+            M.TulisMat();
+        }
         System.out.println();
         double a = M.DeterminanCofaktor(M);
         System.out.println(a);

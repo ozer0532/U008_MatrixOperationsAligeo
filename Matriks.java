@@ -80,6 +80,21 @@ public class Matriks {
         }
     }
 
+    /* ********** OPERASI MATRIKS DASAR ********** */
+    public static Matriks Kali (Matriks M, double k) {
+        Matriks out = new Matriks(M.Baris, M.Kolom);
+        for (int i = 0; i < M.Baris; i++) {
+            for (int j = 0; j < M.Kolom; j++) {
+                out.Mat[i][j] = M.Mat[i][j] * k;
+            }
+        }
+        return out;
+    }
+
+    public void Kali (double k) {
+        this.Mat = Kali(this, k).Mat;
+    }
+
     /* ********** OPERASI BARIS ELEMENTER ********** */ 
     // Nuker Baris
     public void Swap(int Brs1, int Brs2) {
@@ -117,6 +132,19 @@ public class Matriks {
         MinusBaris(a, b, 1);
     }
 
+    /* ********** SIFAT MATRIKS ********** */
+    public static boolean IsIdentitas (Matriks M) {
+        boolean out = true;
+        for (int i = 0; i < M.Baris; i++) {
+            for (int j = 0; j < M.Kolom; j++) {
+                if (!(((i == j) && M.Mat[i][j] == 1) || ((i != j) && M.Mat[i][j] == 0))) {
+                    out = false;
+                }
+            }
+        }
+        return out;
+    }
+
     /* ********** FUNGSI SKALAR ********** */
     // Determinan
     public double DeterminanCofaktor(Matriks M) {
@@ -149,7 +177,7 @@ public class Matriks {
             if (iM != i) {
                 jMi = GetFirstIdxKol(Minor);
                 for (jM = GetFirstIdxKol(M); jM <= GetLastIdxKol(M); jM++)
-                    if (jM != GetFirstIdxKol(M)) {
+                    if (jM != j) {
                         Minor.Mat[iMi][jMi] = M.Mat[iM][jM];
                         jMi++;
                     }
@@ -186,13 +214,53 @@ public class Matriks {
         this.Mat = M.Mat;
     }
 
-    // Masih salah hasilnya
     public void Adjoin(){
         this.MatCofaktor();
         this.Transpose();
     }
 
-    public static Matriks EliminasiGauss(Matriks in) {
+    public static boolean InversGaussJordan (Matriks in, Matriks out) {
+        // in terdefinisi dan IsBujurSangkar(in), Program menghasilkan invers dari in dengan Eliminasi Gauss-Jordan
+        // Jika gagal maka out = in
+        Matriks M = Copy(in);
+
+        M = ConcatHorizontally(M, Identitas(M.Baris));
+        M = EliminasiGaussJordan(M);
+
+        Matriks N = new Matriks(in.Baris, in.Kolom);
+        for (int i = 0; i < N.Baris; i++) {
+            for (int j = 0; j < N.Kolom; j++) {
+                N.Mat[i][j] = M.Mat[i][j];
+            }
+        }
+
+        if (IsIdentitas(N)) {
+            Copy(in, out);
+
+            for (int i = 0; i < out.Baris; i++) {
+                for (int j = 0; j < out.Kolom; j++) {
+                    out.Mat[i][j] = M.Mat[i][j + out.Kolom];
+                }
+            }
+            return true;
+        } else {
+            Copy(in, out);
+            return false;
+        }
+    }
+
+    public boolean InversAdjoin (Matriks in, Matriks out) {
+        Copy(in, out);
+        double det = DeterminanCofaktor(out);
+        if (det != 0) {
+            out.Kali(1/det);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static Matriks EliminasiGauss (Matriks in) {
         // I.S. M terdefinisi
         // F.S. M diubah menjadi matriks eselonnya
         // Proses: Eliminasi Gauss
@@ -248,7 +316,7 @@ public class Matriks {
         return M;
     }
 
-    public static Matriks EliminasiGaussJordan(Matriks in) {
+    public static Matriks EliminasiGaussJordan (Matriks in) {
         // I.S. M terdefinisi
         // F.S. M diubah menjadi matriks eselon-terreduksinya
         // Proses: Eliminasi Gauss Jordan
@@ -277,7 +345,7 @@ public class Matriks {
         return M;
     }
     
-    public static void  Copy(Matriks dari, Matriks ke) {
+    public static void Copy (Matriks dari, Matriks ke) {
         // I.S. dari dan ke terdefinisi
         // F.S. ke berisi sama dengan dari
         ke.Baris = dari.Baris;
@@ -292,14 +360,45 @@ public class Matriks {
     }
 
     // Varian fungsi dari Copy Matriks diatas
-    public static Matriks Copy(Matriks dari) {
+    public static Matriks Copy (Matriks dari) {
         Matriks ke = new Matriks(1, 1);
         Copy(dari, ke);
         return ke;
     }
 
-    // BELOM KELAR
-    public static Matriks ConcatHorizontally(Matriks M, Matriks N) {
-        return new Matriks(1,1);
+    // Menyambungkan matriks M dan N
+    public static Matriks ConcatHorizontally (Matriks M, Matriks N) {
+        // M dan N terdefinisi dan jumlah baris sama, fungsi mengoutput hasil gabungan M dan N
+        Matriks out = new Matriks(M.Baris, M.Kolom + N.Kolom);
+
+        for (int i = 0; i < out.Baris; i++) {
+            for (int j = 0; j < out.Kolom; j++) {
+                if (j < M.Kolom) {
+                    out.Mat[i][j] = M.Mat[i][j];
+                } else {
+                    out.Mat[i][j] = N.Mat[i][j - M.Kolom];
+                }
+            }
+        }
+
+        return out;
+    }
+
+    // Menyambungkan matriks M dan N
+    public static Matriks ConcatVertically (Matriks M, Matriks N) {
+        // M dan N terdefinisi dan jumlah kolom sama, fungsi mengoutput hasil gabungan M dan N
+        Matriks out = new Matriks(M.Baris + N.Baris, M.Kolom);
+
+        for (int i = 0; i < out.Baris; i++) {
+            for (int j = 0; j < out.Kolom; j++) {
+                if (i < M.Baris) {
+                    out.Mat[i][j] = M.Mat[i][j];
+                } else {
+                    out.Mat[i][j] = N.Mat[i - M.Baris][j];
+                }
+            }
+        }
+
+        return out;
     }
 }

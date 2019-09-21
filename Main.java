@@ -8,15 +8,12 @@ public class Main {
         int n = scanner.nextInt();
         int m = scanner.nextInt();
         Matriks M = new Matriks(n, m);
-        Matriks N = new Matriks(1, 1);
+        //Matriks N = new Matriks(1, 1);
 
         M.BacaMat();
-        if (Matriks.InversGaussJordan(M, N)) {
-            M.TulisMat();
-            N.TulisMat();
-        } else {
-            M.TulisMat();
-        }
+        M.TulisMat();
+        System.out.println(M.DeterminanCofaktor(M));
+        System.out.println(M.DeterminanOBE(M));
         System.out.println();
         double a = M.DeterminanCofaktor(M);
         System.out.println(a);

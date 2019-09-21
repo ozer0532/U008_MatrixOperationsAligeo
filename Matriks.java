@@ -147,6 +147,59 @@ public class Matriks {
 
     /* ********** FUNGSI SKALAR ********** */
     // Determinan
+    public double DeterminanOBE(Matriks M) {
+        Matriks N = Copy(M);
+        
+        // Proses mengurutkan baris
+        int[] zeroCount = new int[N.Baris];
+        int swapCount = 0;
+        for (int i = 0; i < N.Baris; i++) {         // Kalkulasi jumlah 0
+            zeroCount[i] = 0;
+            int j = 0;
+            while (j < N.Kolom && N.Mat[i][j] == 0) {
+                zeroCount[i]++;
+                j++;
+            }
+        }
+        for (int i = 0; i < N.Baris; i++) {         // Algoritma Pengurutan
+            for (int j = 0; j < N.Baris - 1; j++) {
+                if (zeroCount[j] > zeroCount[j+1]) {
+                    int temp;
+                    N.Swap(j, j+1);
+                    swapCount++;
+                    temp = zeroCount[j];
+                    zeroCount[j] = zeroCount[j+1];
+                    zeroCount[j+1] = temp;
+                }
+            }
+        }
+        // Proses mereduksi baris
+        int indent = 0;
+
+        for (int i = 0; i < N.Baris; i++) {
+            // Mencari sel bernilai
+            while (i + indent < N.Kolom && N.Mat[i][i + indent] == 0) {
+                indent++;
+            }
+                
+            if (i + indent < N.Kolom) {
+                // Pengurangan baris dibawahnya
+                for (int j = i + 1; j < N.Baris; j++) {
+                    N.MinusBaris(j, i, N.Mat[j][i+indent] / N.Mat[i][i+indent]);
+
+                }
+            }
+        }
+
+        // Proses menghitung jumlah diagonal
+        double det = N.Mat[0][0];
+        for (int i = 1; i < N.Baris; i++) {
+            det *= N.Mat[i][i];
+        }
+        det *= ((swapCount & 2) == 0)? 1:-1;
+        return det;
+    }
+
     public double DeterminanCofaktor(Matriks M) {
         /* Prekondisi: M bujur sangkar */
         /* Menghitung nilai determinan M */

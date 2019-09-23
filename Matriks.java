@@ -1,4 +1,5 @@
 import java.util.*;
+import java.io.*;
 
 public class Matriks {
     Scanner scanner = new Scanner(System.in); // Untuk Input
@@ -27,6 +28,28 @@ public class Matriks {
         for (int i = 0; i < Mat.length; i++)
             for (int j = 0; j < Mat[0].length; j++)
                 this.Mat[i][j] = Mat[i][j];
+    }
+    
+    // Belom selesai
+    public Matriks (Scanner scan){
+        this.Baris = BrsMin;
+        this.Kolom = KolMin;
+        while(scan.hasNextLine()){
+            this.Baris++;
+            Scanner colReader = new Scanner(scan.nextLine());
+            while(colReader.hasNextInt()){
+                this.Kolom++;
+            }
+            colReader.close();
+        }
+        this.Mat = new double[this.Baris][this.Kolom];   
+        for(int i = 0; i < this.Baris; i++)
+            for(int j = 0; j < this.Kolom; j++){
+                if(scan.hasNextInt()){
+                    this.Mat[i][j] = scan.nextInt();
+                }
+            }
+        scan.close();
     }
 
     /* ********** SELEKTOR ********** */ 

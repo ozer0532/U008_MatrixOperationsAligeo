@@ -2,17 +2,27 @@ import java.util.*;
 
 public class SPL {
 
-    public static void SPLGauss () {
-        Scanner scanner = new Scanner(System.in); // Untuk Input
-
-        boolean tidakBernilai = false;
+    public static void SPLGauss (String suffix) {
+        
+        Scanner scanner = new Scanner(System.in); // Untuk Input        
 
         int m = scanner.nextInt();
         int n = scanner.nextInt();
         Matriks M = new Matriks(m, n+1);
-
+        
         M.BacaMat();
+        
+        SPLGauss(M, suffix);
 
+        scanner.close();
+    }
+    
+    public static void SPLGauss (Matriks M, String suffix) {
+        
+        Scanner scanner = new Scanner(System.in); // Untuk Input
+        boolean tidakBernilai = false;
+
+        int n = M.GetLastIdxKol(M);
         M = Matriks.EliminasiGauss(M);
 
         Expression[] hasil = new Expression[n];
@@ -59,14 +69,14 @@ public class SPL {
             System.out.println("SPL tersebut tidak memiliki solusi");
         } else {
             for (int i = 0; i < hasil.length; i++) {
-                System.out.println("x" + (i + 1) + " = " + hasil[i].ToString());
+                System.out.println(suffix + (i + 1) + " = " + hasil[i].ToString());
             }
         }
 
         scanner.close();
     }
 
-    public static void SPLGaussJordan () {
+    public static void SPLGaussJordan (String suffix) {
         Scanner scanner = new Scanner(System.in); // Untuk Input
 
         boolean tidakBernilai = false;
@@ -123,14 +133,14 @@ public class SPL {
             System.out.println("SPL tersebut tidak memiliki solusi");
         } else {
             for (int i = 0; i < hasil.length; i++) {
-                System.out.println("x" + (i + 1) + " = " + hasil[i].ToString());
+                System.out.println(suffix + (i + 1) + " = " + hasil[i].ToString());
             }
         }
 
         scanner.close();
     }
 
-    public static void SPLInvers () {
+    public static void SPLInvers (String suffix) {
         
         Scanner scanner = new Scanner(System.in); // Untuk Input
 
@@ -158,7 +168,7 @@ public class SPL {
             Matriks X = Matriks.Kali(AInvers, B);           // PROSES SEBELUM OUTPUT
     
             for (int i = X.GetFirstIdxBrs(X); i <= X.GetLastIdxBrs(X); i++) {
-                System.out.println("x" + (i + 1) + " = " + X.Mat[i][0]);
+                System.out.println(suffix + (i + 1) + " = " + X.Mat[i][0]);
             }
         } else {
             System.out.println("SPL tidak dapat diselesaikan dengan metode Invers");
@@ -167,7 +177,7 @@ public class SPL {
         scanner.close();
     }
 
-    public static void SPLCramer () {
+    public static void SPLCramer (String suffix) {
         
         Scanner scanner = new Scanner(System.in); // Untuk Input
 
@@ -205,7 +215,7 @@ public class SPL {
 
             // OUTPUT
             for (int i = 0; i < n; i++) {
-                System.out.println("x" + (i + 1) + " = " + x[i]);
+                System.out.println(suffix + (i + 1) + " = " + x[i]);
             }
         } else {
             System.out.println("SPL tersebut tidak memiliki solusi");

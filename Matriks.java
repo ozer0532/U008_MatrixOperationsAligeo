@@ -2,6 +2,8 @@ import java.util.*;
 import java.io.*;
 
 public class Matriks {
+    public static final double decPoint = 10000000000d;
+
     Scanner scanner = new Scanner(System.in); // Untuk Input
     public int KolMin = 0;
     public int BrsMin = 0;
@@ -330,6 +332,7 @@ public class Matriks {
         double det = DeterminanCofaktor(out);
         if (det != 0) {
             out.Kali(1/det);
+            out.Approximate();
             return true;
         } else {
             return false;
@@ -389,6 +392,8 @@ public class Matriks {
                 }
             }
         }
+        M.Approximate();
+
         return M;
     }
 
@@ -418,6 +423,7 @@ public class Matriks {
             }
         }
         
+        M.Approximate();
         return M;
     }
     
@@ -476,5 +482,17 @@ public class Matriks {
         }
 
         return out;
+    }
+
+    private static double Approximate (double x) {
+        return (Math.round(x * decPoint) / decPoint);
+    }
+
+    private void Approximate () {
+        for (int i = 0; i < Baris; i++) {
+            for (int j = 0; j < Kolom; j++) {
+                Mat[i][j] = Approximate(Mat[i][j]);
+            }
+        }
     }
 }

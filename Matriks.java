@@ -120,6 +120,21 @@ public class Matriks {
         this.Mat = Kali(this, k).Mat;
     }
 
+    public static Matriks Kali (Matriks M, Matriks N) {
+        Matriks out = new Matriks(M.Baris, N.Kolom);
+
+        for (int i = 0; i < out.Baris; i++) {
+            for (int j = 0; j < out.Kolom; j++) {
+                out.Mat[i][j] = 0;
+                for (int k = 0; k < M.Kolom; k++) {
+                    out.Mat[i][j] += M.Mat[i][k] * N.Mat[k][j];
+                }
+            }
+        }
+
+        return out;
+    }
+
     /* ********** OPERASI BARIS ELEMENTER ********** */ 
     // Nuker Baris
     public void Swap(int Brs1, int Brs2) {

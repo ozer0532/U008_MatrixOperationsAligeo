@@ -14,6 +14,9 @@ public class SPL {
         M.BacaMat();
 
         M = Matriks.EliminasiGauss(M);
+
+        M.TulisMat();
+
         Expression[] hasil = new Expression[n];
         for (int i = 0; i < hasil.length; i++) {
             hasil[i] = new Expression();
@@ -41,8 +44,10 @@ public class SPL {
                     }
                 }
             }
-            if (idxPertama == -1 && M.Mat[i][n] != 0) {      // SPL tidak punya nilai
-                tidakBernilai = true;
+            if (idxPertama == -1) {
+                if (M.Mat[i][n] != 0) {
+                    tidakBernilai = true;
+                }
             } else {
                 hasil[idxPertama] = value;
             }
@@ -59,14 +64,6 @@ public class SPL {
                 System.out.println("x" + (i + 1) + " = " + hasil[i].ToString());
             }
         }
-
-
-
-
-
-
-
-
 
         scanner.close();
     }

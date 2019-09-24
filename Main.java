@@ -5,19 +5,19 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in); // Untuk Input
 
-        int n = scanner.nextInt();
-        int m = scanner.nextInt();
-        Matriks M = new Matriks(n, m);
+        //int n = scanner.nextInt();
+        //int m = scanner.nextInt();
+        //Matriks M = new Matriks(n, m);
 
-        M.BacaMat();
-        System.out.println();
+        //M.BacaMat();
+        //System.out.println();
         
-        Matriks.EliminasiGauss(M).TulisMat();
-        System.out.println();
+        //Matriks.EliminasiGauss(M).TulisMat();
+        //System.out.println();
 
         SPL.SPLGauss();
 
-        M.TulisMat();
+        //M.TulisMat();
 
         /*
         System.out.println(M.DeterminanCofaktor(M));

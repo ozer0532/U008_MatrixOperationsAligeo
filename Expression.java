@@ -40,17 +40,23 @@ public class Expression {
         for (int i = 1; i < exp.length; i++) {
             if (exp[i] != 0) {
                 if (out == "") {
-                    out = String.valueOf(exp[i]);
+                    if (exp[i] == 1) {
+                        out = Nilai.GetVarName(i);
+                    } else if (exp[i] == -1) {
+                        out = "-" + Nilai.GetVarName(i);
+                    } else {
+                        out = String.format("%.2f", exp[i]) + Nilai.GetVarName(i);
+                    }
                 } else {
                     if (exp[i] > 0) {
                         if (exp[i] != 1) {
-                            out += " + " + String.valueOf(exp[i]) + Nilai.GetVarName(i);
+                            out += " + " + String.format("%.2f", exp[i]) + Nilai.GetVarName(i);
                         } else {
                             out += " + " + Nilai.GetVarName(i);
                         }
                     } else {
                         if (exp[i] != -1) {
-                            out += " - " + String.valueOf(exp[i] * -1) + Nilai.GetVarName(i);
+                            out += " - " + String.format("%.2f", exp[i] * -1) + Nilai.GetVarName(i);
                         } else {
                             out += " - " + Nilai.GetVarName(i);
                         }
@@ -60,12 +66,12 @@ public class Expression {
         }
         if (exp[0] != 0) {
             if (out == "") {
-                out = String.valueOf(exp[0]);
+                out = String.format("%.2f", exp[0]);
             } else {
                 if (exp[0] > 0) {
-                    out += " + " + String.valueOf(exp[0]);
+                    out += " + " + String.format("%.2f", exp[0]);
                 } else {
-                    out += " - " + String.valueOf(exp[0] * -1);
+                    out += " - " + String.format("%.2f", exp[0] * -1);
                 }
             }
         } else {

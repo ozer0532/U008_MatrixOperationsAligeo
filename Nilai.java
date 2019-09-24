@@ -20,6 +20,6 @@ public class Nilai {
     }
 
     public static int GetVarIndex (String var) {
-        return varList.indexOf(var);
+        return varList.indexOf(var) + 1;
     }
 }

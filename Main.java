@@ -15,7 +15,7 @@ public class Main {
         //Matriks.EliminasiGauss(M).TulisMat();
         //System.out.println();
 
-        SPL.SPLInvers();
+        SPL.SPLCramer();
 
         //M.TulisMat();
 

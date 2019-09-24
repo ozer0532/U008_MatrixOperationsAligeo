@@ -139,6 +139,7 @@ public class SPL {
 
         M.BacaMat();
 
+        // SPLIT INPUT
         Matriks A = new Matriks(n, n);
         for (int i = A.GetFirstIdxBrs(A); i <= A.GetLastIdxBrs(A); i++) {
             for (int j = A.GetFirstIdxKol(A); j <= A.GetLastIdxKol(A); j++) {
@@ -151,13 +152,16 @@ public class SPL {
             B.Mat[i][0] = M.Mat[i][n];
         }
 
+        // OUTPUT
         Matriks AInvers = new Matriks(n, n);
         if (Matriks.InversGaussJordan(A, AInvers)) {
-            Matriks X = Matriks.Kali(AInvers, B);
+            Matriks X = Matriks.Kali(AInvers, B);           // PROSES SEBELUM OUTPUT
     
             for (int i = X.GetFirstIdxBrs(X); i <= X.GetLastIdxBrs(X); i++) {
                 System.out.println("x" + (i + 1) + " = " + X.Mat[i][0]);
             }
+        } else {
+            System.out.println("SPL tidak dapat diselesaikan dengan metode Invers");
         }
 
         scanner.close();
@@ -172,6 +176,7 @@ public class SPL {
 
         M.BacaMat();
 
+        // SPLIT INPUT
         Matriks A = new Matriks(n, n);
         for (int i = A.GetFirstIdxBrs(A); i <= A.GetLastIdxBrs(A); i++) {
             for (int j = A.GetFirstIdxKol(A); j <= A.GetLastIdxKol(A); j++) {
@@ -184,13 +189,26 @@ public class SPL {
             B.Mat[i][0] = M.Mat[i][n];
         }
 
-        Matriks AInvers = new Matriks(n, n);
-        if (Matriks.InversGaussJordan(A, AInvers)) {
-            Matriks X = Matriks.Kali(AInvers, B);
-    
-            for (int i = X.GetFirstIdxBrs(X); i <= X.GetLastIdxBrs(X); i++) {
-                System.out.println("x" + (i + 1) + " = " + X.Mat[i][0]);
+        // PROSES & OUTPUT
+        double detA = A.DeterminanCofaktor(A);
+        if (detA != 0) {
+            double[] x = new double[n];
+            for (int j = A.GetFirstIdxKol(A); j <= A.GetLastIdxKol(A); j++) {
+                Matriks Aj = new Matriks(n, n);
+                Matriks.Copy(A, Aj);
+                for (int i = A.GetFirstIdxBrs(M); i <= A.GetLastIdxBrs(A); i++) {
+                    Aj.Mat[i][j] = B.Mat[i][0];
+                }
+                
+                x[j] = Aj.DeterminanCofaktor(Aj) / detA;
             }
+
+            // OUTPUT
+            for (int i = 0; i < n; i++) {
+                System.out.println("x" + (i + 1) + " = " + x[i]);
+            }
+        } else {
+            System.out.println("SPL tersebut tidak memiliki solusi");
         }
 
         scanner.close();

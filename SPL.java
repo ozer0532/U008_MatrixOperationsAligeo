@@ -12,7 +12,6 @@ public class SPL {
 
         SPLGauss(M, suffix);
 
-        scanner.close();
     }
 
     public static void SPLGauss(Matriks M, String suffix) {
@@ -73,7 +72,6 @@ public class SPL {
             }
         }
 
-        scanner.close();
     }
 
     public static void SPLGaussJordan(String suffix) {
@@ -139,7 +137,6 @@ public class SPL {
             }
         }
 
-        scanner.close();
     }
 
     public static void SPLInvers(String suffix) {
@@ -174,7 +171,6 @@ public class SPL {
             System.out.println("SPL tidak dapat diselesaikan dengan metode Invers");
         }
 
-        scanner.close();
     }
 
     public static void SPLCramer(String suffix) {
@@ -218,7 +214,5 @@ public class SPL {
         } else {
             System.out.println("SPL tersebut tidak memiliki solusi");
         }
-
-        scanner.close();
     }
 }

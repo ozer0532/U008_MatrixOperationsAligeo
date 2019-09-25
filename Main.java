@@ -7,10 +7,9 @@ public class Main {
         Scanner scanner = new Scanner(System.in); // Untuk Input
         
         // Menu.Run();
-        Scanner input = new Scanner (new File("mat.txt"));
-        Matriks M = new Matriks(input);
+        String file = "mat.txt";
+        Matriks M = new Matriks(file);
         M.TulisMat();
         scanner.close();
-        input.close();
     }
 }

@@ -1,4 +1,7 @@
 import java.util.*;
+
+//import jdk.nashorn.internal.parser.Scanner;
+
 import java.io.*;
 
 public class Matriks {
@@ -32,26 +35,32 @@ public class Matriks {
                 this.Mat[i][j] = Mat[i][j];
     }
 
-    // Belom selesai
-    public Matriks(Scanner scan) {
+    // Tolong di cek
+    public Matriks(String file_name) throws FileNotFoundException {
+        Scanner input = new Scanner (new File(file_name));
         this.Baris = BrsMin;
         this.Kolom = KolMin;
-        while (scan.hasNextLine()) {
+        while(input.hasNextLine()){
             this.Baris++;
-            Scanner colReader = new Scanner(scan.nextLine());
-            while (colReader.hasNextInt()) {
-                this.Kolom++;
-            }
-            colReader.close();
+            input.nextLine();
         }
+
+        while(input.hasNextInt()){
+            this.Kolom++;
+            input.nextInt();
+        }
+        
         this.Mat = new double[this.Baris][this.Kolom];
-        for (int i = 0; i < this.Baris; i++)
-            for (int j = 0; j < this.Kolom; j++) {
-                if (scan.hasNextInt()) {
-                    this.Mat[i][j] = scan.nextInt();
+
+        input.close();
+
+        input = new Scanner(new File(file_name));
+        for(int i = 0; i < this.Baris; i++)
+            for(int j = 0; j < this.Kolom; j++)
+                if(input.hasNextInt()){
+                    this.Mat[i][j] = input.nextInt();
                 }
-            }
-        scan.close();
+        input.close();
     }
 
     /* ********** SELEKTOR ********** */

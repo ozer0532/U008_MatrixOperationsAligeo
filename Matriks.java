@@ -35,7 +35,7 @@ public class Matriks {
                 this.Mat[i][j] = Mat[i][j];
     }
 
-    // Tolong di cek
+    // Tolong di cek, size udah bener input blm mau
     public Matriks(String file_name) throws FileNotFoundException {
         Scanner input = new Scanner (new File(file_name));
         this.Baris = BrsMin;
@@ -45,21 +45,22 @@ public class Matriks {
             input.nextLine();
         }
 
-        while(input.hasNextInt()){
-            this.Kolom++;
-            input.nextInt();
+        while(input.hasNext()){
+            if (input.hasNextInt()){
+                this.Kolom++;
+            }
+            input.next();
         }
-        
+
         this.Mat = new double[this.Baris][this.Kolom];
 
         input.close();
 
         input = new Scanner(new File(file_name));
-        for(int i = 0; i < this.Baris; i++)
-            for(int j = 0; j < this.Kolom; j++)
-                if(input.hasNextInt()){
-                    this.Mat[i][j] = input.nextInt();
-                }
+        for(int i = BrsMin; i < this.Baris; i++)
+            for(int j = KolMin; j < this.Kolom; j++){
+                this.Mat[i][j] = input.nextInt();
+            }
         input.close();
     }
 

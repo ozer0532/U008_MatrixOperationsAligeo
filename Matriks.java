@@ -15,7 +15,7 @@ public class Matriks {
     // Manggil isi matriks-nya matriks.Mat[Baris][Kolom]
     // Indeks Baris & Kolom mulai dari 0
 
-    /* ********** KONSTRUKTOR ********** */ 
+    /* ********** KONSTRUKTOR ********** */
     public Matriks(int baris, int kolom) {
         this.Baris = baris;
         this.Kolom = kolom;
@@ -31,30 +31,30 @@ public class Matriks {
             for (int j = 0; j < Mat[0].length; j++)
                 this.Mat[i][j] = Mat[i][j];
     }
-    
+
     // Belom selesai
-    public Matriks (Scanner scan){
+    public Matriks(Scanner scan) {
         this.Baris = BrsMin;
         this.Kolom = KolMin;
-        while(scan.hasNextLine()){
+        while (scan.hasNextLine()) {
             this.Baris++;
             Scanner colReader = new Scanner(scan.nextLine());
-            while(colReader.hasNextInt()){
+            while (colReader.hasNextInt()) {
                 this.Kolom++;
             }
             colReader.close();
         }
-        this.Mat = new double[this.Baris][this.Kolom];   
-        for(int i = 0; i < this.Baris; i++)
-            for(int j = 0; j < this.Kolom; j++){
-                if(scan.hasNextInt()){
+        this.Mat = new double[this.Baris][this.Kolom];
+        for (int i = 0; i < this.Baris; i++)
+            for (int j = 0; j < this.Kolom; j++) {
+                if (scan.hasNextInt()) {
                     this.Mat[i][j] = scan.nextInt();
                 }
             }
         scan.close();
     }
 
-    /* ********** SELEKTOR ********** */ 
+    /* ********** SELEKTOR ********** */
     public int GetFirstIdxBrs(Matriks M) {
         return BrsMin;
     }
@@ -75,7 +75,7 @@ public class Matriks {
         return (M.Baris * M.Kolom);
     }
 
-    /* ********** TIPE MATRIKS UMUM ********** */ 
+    /* ********** TIPE MATRIKS UMUM ********** */
     public static Matriks Identitas(int N) {
         Matriks I = new Matriks(N, N);
         for (int i = 0; i < N; i++)
@@ -83,12 +83,12 @@ public class Matriks {
         return I;
     }
 
-    /* ********** INPUT/OUTPUT MATRIKS ********** */ 
+    /* ********** INPUT/OUTPUT MATRIKS ********** */
     // Baca Matriks
     public void BacaMat() {
         for (int i = 0; i < this.Baris; i++) {
             for (int j = 0; j < this.Kolom; j++) {
-                this.Mat[i][j] = scanner.nextInt();
+                this.Mat[i][j] = scanner.nextDouble();
             }
         }
         System.out.print("\n");
@@ -106,7 +106,7 @@ public class Matriks {
     }
 
     /* ********** OPERASI MATRIKS DASAR ********** */
-    public static Matriks Kali (Matriks M, double k) {
+    public static Matriks Kali(Matriks M, double k) {
         Matriks out = new Matriks(M.Baris, M.Kolom);
         for (int i = 0; i < M.Baris; i++) {
             for (int j = 0; j < M.Kolom; j++) {
@@ -116,11 +116,11 @@ public class Matriks {
         return out;
     }
 
-    public void Kali (double k) {
+    public void Kali(double k) {
         this.Mat = Kali(this, k).Mat;
     }
 
-    public static Matriks Kali (Matriks M, Matriks N) {
+    public static Matriks Kali(Matriks M, Matriks N) {
         Matriks out = new Matriks(M.Baris, N.Kolom);
 
         for (int i = 0; i < out.Baris; i++) {
@@ -135,7 +135,7 @@ public class Matriks {
         return out;
     }
 
-    /* ********** OPERASI BARIS ELEMENTER ********** */ 
+    /* ********** OPERASI BARIS ELEMENTER ********** */
     // Nuker Baris
     public void Swap(int Brs1, int Brs2) {
         double[] temp = Mat[Brs1];
@@ -173,7 +173,7 @@ public class Matriks {
     }
 
     /* ********** SIFAT MATRIKS ********** */
-    public static boolean IsIdentitas (Matriks M) {
+    public static boolean IsIdentitas(Matriks M) {
         boolean out = true;
         for (int i = 0; i < M.Baris; i++) {
             for (int j = 0; j < M.Kolom; j++) {
@@ -189,11 +189,11 @@ public class Matriks {
     // Determinan
     public double DeterminanOBE(Matriks M) {
         Matriks N = Copy(M);
-        
+
         // Proses mengurutkan baris
         int[] zeroCount = new int[N.Baris];
         int swapCount = 0;
-        for (int i = 0; i < N.Baris; i++) {         // Kalkulasi jumlah 0
+        for (int i = 0; i < N.Baris; i++) { // Kalkulasi jumlah 0
             zeroCount[i] = 0;
             int j = 0;
             while (j < N.Kolom && N.Mat[i][j] == 0) {
@@ -201,15 +201,15 @@ public class Matriks {
                 j++;
             }
         }
-        for (int i = 0; i < N.Baris; i++) {         // Algoritma Pengurutan
+        for (int i = 0; i < N.Baris; i++) { // Algoritma Pengurutan
             for (int j = 0; j < N.Baris - 1; j++) {
-                if (zeroCount[j] > zeroCount[j+1]) {
+                if (zeroCount[j] > zeroCount[j + 1]) {
                     int temp;
-                    N.Swap(j, j+1);
+                    N.Swap(j, j + 1);
                     swapCount++;
                     temp = zeroCount[j];
-                    zeroCount[j] = zeroCount[j+1];
-                    zeroCount[j+1] = temp;
+                    zeroCount[j] = zeroCount[j + 1];
+                    zeroCount[j + 1] = temp;
                 }
             }
         }
@@ -221,11 +221,11 @@ public class Matriks {
             while (i + indent < N.Kolom && N.Mat[i][i + indent] == 0) {
                 indent++;
             }
-                
+
             if (i + indent < N.Kolom) {
                 // Pengurangan baris dibawahnya
                 for (int j = i + 1; j < N.Baris; j++) {
-                    N.MinusBaris(j, i, N.Mat[j][i+indent] / N.Mat[i][i+indent]);
+                    N.MinusBaris(j, i, N.Mat[j][i + indent] / N.Mat[i][i + indent]);
 
                 }
             }
@@ -236,7 +236,7 @@ public class Matriks {
         for (int i = 1; i < N.Baris; i++) {
             det *= N.Mat[i][i];
         }
-        det *= ((swapCount & 2) == 0)? 1:-1;
+        det *= ((swapCount & 2) == 0) ? 1 : -1;
         return det;
     }
 
@@ -257,7 +257,7 @@ public class Matriks {
     }
 
     private double Cofaktor(Matriks M, int i, int j) {
-        return DeterminanCofaktor(Minor(M, i, j)) * (((i+j)%2==0)?1:-1);
+        return DeterminanCofaktor(Minor(M, i, j)) * (((i + j) % 2 == 0) ? 1 : -1);
     }
 
     /* ********** MANIPULASI MATRIKS ********** */
@@ -298,22 +298,23 @@ public class Matriks {
         this.Mat = M1.Mat;
     }
 
-    public void MatCofaktor(){
+    public void MatCofaktor() {
         Matriks M = new Matriks(this.Kolom, this.Baris);
-        for (int i = GetFirstIdxBrs(this); i <= GetLastIdxBrs(this); i++) 
+        for (int i = GetFirstIdxBrs(this); i <= GetLastIdxBrs(this); i++)
             for (int j = GetFirstIdxKol(this); j <= GetLastIdxKol(this); j++) {
                 M.Mat[i][j] = Cofaktor(this, i, j);
             }
         this.Mat = M.Mat;
     }
 
-    public void Adjoin(){
+    public void Adjoin() {
         this.MatCofaktor();
         this.Transpose();
     }
 
-    public static boolean InversGaussJordan (Matriks in, Matriks out) {
-        // in terdefinisi dan IsBujurSangkar(in), Program menghasilkan invers dari in dengan Eliminasi Gauss-Jordan
+    public static boolean InversGaussJordan(Matriks in, Matriks out) {
+        // in terdefinisi dan IsBujurSangkar(in), Program menghasilkan invers dari in
+        // dengan Eliminasi Gauss-Jordan
         // Jika gagal maka out = in
         Matriks M = Copy(in);
 
@@ -342,11 +343,11 @@ public class Matriks {
         }
     }
 
-    public boolean InversAdjoin (Matriks in, Matriks out) {
+    public boolean InversAdjoin(Matriks in, Matriks out) {
         Copy(in, out);
         double det = DeterminanCofaktor(out);
         if (det != 0) {
-            out.Kali(1/det);
+            out.Kali(1 / det);
             out.Approximate();
             return true;
         } else {
@@ -354,18 +355,18 @@ public class Matriks {
         }
     }
 
-    public static Matriks EliminasiGauss (Matriks in) {
+    public static Matriks EliminasiGauss(Matriks in) {
         // I.S. M terdefinisi
         // F.S. M diubah menjadi matriks eselonnya
         // Proses: Eliminasi Gauss
-        
+
         // Inisialisasi
-        Matriks M = new Matriks(1,1);
+        Matriks M = new Matriks(1, 1);
         M = Copy(in);
 
         // Proses mengurutkan baris
         int[] zeroCount = new int[M.Baris];
-        for (int i = 0; i < M.Baris; i++) {         // Kalkulasi jumlah 0
+        for (int i = 0; i < M.Baris; i++) { // Kalkulasi jumlah 0
             zeroCount[i] = 0;
             int j = 0;
             while (j < M.Kolom && M.Mat[i][j] == 0) {
@@ -373,14 +374,14 @@ public class Matriks {
                 j++;
             }
         }
-        for (int i = 0; i < M.Baris; i++) {         // Algoritma Pengurutan
+        for (int i = 0; i < M.Baris; i++) { // Algoritma Pengurutan
             for (int j = 0; j < M.Baris - 1; j++) {
-                if (zeroCount[j] > zeroCount[j+1]) {
+                if (zeroCount[j] > zeroCount[j + 1]) {
                     int temp;
-                    M.Swap(j, j+1);
+                    M.Swap(j, j + 1);
                     temp = zeroCount[j];
-                    zeroCount[j] = zeroCount[j+1];
-                    zeroCount[j+1] = temp;
+                    zeroCount[j] = zeroCount[j + 1];
+                    zeroCount[j + 1] = temp;
                 }
             }
         }
@@ -393,7 +394,7 @@ public class Matriks {
             while (i + indent < M.Kolom && M.Mat[i][i + indent] == 0) {
                 indent++;
             }
-                
+
             if (i + indent < M.Kolom) {
                 // Ubah angka depan jadi 1
                 M.KaliBaris(i, 1 / M.Mat[i][i + indent]);
@@ -412,7 +413,7 @@ public class Matriks {
         return M;
     }
 
-    public static Matriks EliminasiGaussJordan (Matriks in) {
+    public static Matriks EliminasiGaussJordan(Matriks in) {
         // I.S. M terdefinisi
         // F.S. M diubah menjadi matriks eselon-terreduksinya
         // Proses: Eliminasi Gauss Jordan
@@ -437,18 +438,18 @@ public class Matriks {
                 }
             }
         }
-        
+
         M.Approximate();
         return M;
     }
-    
-    public static void Copy (Matriks dari, Matriks ke) {
+
+    public static void Copy(Matriks dari, Matriks ke) {
         // I.S. dari dan ke terdefinisi
         // F.S. ke berisi sama dengan dari
         ke.Baris = dari.Baris;
         ke.Kolom = dari.Kolom;
         ke.Mat = new double[dari.Baris][dari.Kolom];
-        
+
         for (int i = 0; i < ke.Baris; i++) {
             for (int j = 0; j < ke.Kolom; j++) {
                 ke.Mat[i][j] = dari.Mat[i][j];
@@ -457,15 +458,16 @@ public class Matriks {
     }
 
     // Varian fungsi dari Copy Matriks diatas
-    public static Matriks Copy (Matriks dari) {
+    public static Matriks Copy(Matriks dari) {
         Matriks ke = new Matriks(1, 1);
         Copy(dari, ke);
         return ke;
     }
 
     // Menyambungkan matriks M dan N
-    public static Matriks ConcatHorizontally (Matriks M, Matriks N) {
-        // M dan N terdefinisi dan jumlah baris sama, fungsi mengoutput hasil gabungan M dan N
+    public static Matriks ConcatHorizontally(Matriks M, Matriks N) {
+        // M dan N terdefinisi dan jumlah baris sama, fungsi mengoutput hasil gabungan M
+        // dan N
         Matriks out = new Matriks(M.Baris, M.Kolom + N.Kolom);
 
         for (int i = 0; i < out.Baris; i++) {
@@ -482,8 +484,9 @@ public class Matriks {
     }
 
     // Menyambungkan matriks M dan N
-    public static Matriks ConcatVertically (Matriks M, Matriks N) {
-        // M dan N terdefinisi dan jumlah kolom sama, fungsi mengoutput hasil gabungan M dan N
+    public static Matriks ConcatVertically(Matriks M, Matriks N) {
+        // M dan N terdefinisi dan jumlah kolom sama, fungsi mengoutput hasil gabungan M
+        // dan N
         Matriks out = new Matriks(M.Baris + N.Baris, M.Kolom);
 
         for (int i = 0; i < out.Baris; i++) {
@@ -499,11 +502,11 @@ public class Matriks {
         return out;
     }
 
-    private static double Approximate (double x) {
+    private static double Approximate(double x) {
         return (Math.round(x * decPoint) / decPoint);
     }
 
-    private void Approximate () {
+    private void Approximate() {
         for (int i = 0; i < Baris; i++) {
             for (int j = 0; j < Kolom; j++) {
                 Mat[i][j] = Approximate(Mat[i][j]);

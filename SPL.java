@@ -1,25 +1,22 @@
 import java.util.*;
 
 public class SPL {
+    static Scanner scanner = new Scanner(System.in);
 
-    public static void SPLGauss (String suffix) {
-        
-        Scanner scanner = new Scanner(System.in); // Untuk Input        
-
+    public static void SPLGauss(String suffix) {
         int m = scanner.nextInt();
         int n = scanner.nextInt();
-        Matriks M = new Matriks(m, n+1);
-        
+        Matriks M = new Matriks(m, n + 1);
+
         M.BacaMat();
-        
+
         SPLGauss(M, suffix);
 
         scanner.close();
     }
-    
-    public static void SPLGauss (Matriks M, String suffix) {
-        
-        Scanner scanner = new Scanner(System.in); // Untuk Input
+
+    public static void SPLGauss(Matriks M, String suffix) {
+
         boolean tidakBernilai = false;
 
         int n = M.GetLastIdxKol(M);
@@ -36,15 +33,16 @@ public class SPL {
             for (int j = M.GetFirstIdxKol(M); j <= M.GetLastIdxKol(M); j++) {
                 if (M.Mat[i][j] != 0) {
                     if (j != n) {
-                        if (hasil[j].IsEmpty()) {       // Belum ada nilai
-                            if (idxPertama == -1) {     // Variabel baru pertama
+                        if (hasil[j].IsEmpty()) { // Belum ada nilai
+                            if (idxPertama == -1) { // Variabel baru pertama
                                 idxPertama = j;
-                            } else {                    // Buat variabel parametrik
+                            } else { // Buat variabel parametrik
                                 value.SetVariable(hasil[j].GenerateNewVar(), -M.Mat[i][j]);
                             }
-                        } else {                        // Sudah ada nilai
+                        } else { // Sudah ada nilai
                             for (int k = 0; k < Nilai.varList.length(); k++) {
-                                value.SetVariable(k, value.GetVariable(k).val - (hasil[j].GetVariable(k).val * M.Mat[i][j]));
+                                value.SetVariable(k,
+                                        value.GetVariable(k).val - (hasil[j].GetVariable(k).val * M.Mat[i][j]));
                             }
                         }
                     } else {
@@ -61,8 +59,10 @@ public class SPL {
             }
         }
 
-
-        /* ************************************** OUTPUT ************************************** */
+        /*
+         * ************************************** OUTPUT
+         * **************************************
+         */
 
         // Cek bernilai atau tidak
         if (tidakBernilai) {
@@ -76,14 +76,13 @@ public class SPL {
         scanner.close();
     }
 
-    public static void SPLGaussJordan (String suffix) {
-        Scanner scanner = new Scanner(System.in); // Untuk Input
+    public static void SPLGaussJordan(String suffix) {
 
         boolean tidakBernilai = false;
 
         int m = scanner.nextInt();
         int n = scanner.nextInt();
-        Matriks M = new Matriks(m, n+1);
+        Matriks M = new Matriks(m, n + 1);
 
         M.BacaMat();
 
@@ -100,15 +99,16 @@ public class SPL {
             for (int j = M.GetFirstIdxKol(M); j <= M.GetLastIdxKol(M); j++) {
                 if (M.Mat[i][j] != 0) {
                     if (j != n) {
-                        if (hasil[j].IsEmpty()) {       // Belum ada nilai
-                            if (idxPertama == -1) {     // Variabel baru pertama
+                        if (hasil[j].IsEmpty()) { // Belum ada nilai
+                            if (idxPertama == -1) { // Variabel baru pertama
                                 idxPertama = j;
-                            } else {                    // Buat variabel parametrik
+                            } else { // Buat variabel parametrik
                                 value.SetVariable(hasil[j].GenerateNewVar(), -M.Mat[i][j]);
                             }
-                        } else {                        // Sudah ada nilai
+                        } else { // Sudah ada nilai
                             for (int k = 0; k < Nilai.varList.length(); k++) {
-                                value.SetVariable(k, value.GetVariable(k).val - (hasil[j].GetVariable(k).val * M.Mat[i][j]));
+                                value.SetVariable(k,
+                                        value.GetVariable(k).val - (hasil[j].GetVariable(k).val * M.Mat[i][j]));
                             }
                         }
                     } else {
@@ -125,8 +125,10 @@ public class SPL {
             }
         }
 
-
-        /* ************************************** OUTPUT ************************************** */
+        /*
+         * ************************************** OUTPUT
+         * **************************************
+         */
 
         // Cek bernilai atau tidak
         if (tidakBernilai) {
@@ -140,12 +142,10 @@ public class SPL {
         scanner.close();
     }
 
-    public static void SPLInvers (String suffix) {
-        
-        Scanner scanner = new Scanner(System.in); // Untuk Input
+    public static void SPLInvers(String suffix) {
 
         int n = scanner.nextInt();
-        Matriks M = new Matriks(n, n+1);
+        Matriks M = new Matriks(n, n + 1);
 
         M.BacaMat();
 
@@ -165,8 +165,8 @@ public class SPL {
         // OUTPUT
         Matriks AInvers = new Matriks(n, n);
         if (Matriks.InversGaussJordan(A, AInvers)) {
-            Matriks X = Matriks.Kali(AInvers, B);           // PROSES SEBELUM OUTPUT
-    
+            Matriks X = Matriks.Kali(AInvers, B); // PROSES SEBELUM OUTPUT
+
             for (int i = X.GetFirstIdxBrs(X); i <= X.GetLastIdxBrs(X); i++) {
                 System.out.println(suffix + (i + 1) + " = " + X.Mat[i][0]);
             }
@@ -177,12 +177,10 @@ public class SPL {
         scanner.close();
     }
 
-    public static void SPLCramer (String suffix) {
-        
-        Scanner scanner = new Scanner(System.in); // Untuk Input
+    public static void SPLCramer(String suffix) {
 
         int n = scanner.nextInt();
-        Matriks M = new Matriks(n, n+1);
+        Matriks M = new Matriks(n, n + 1);
 
         M.BacaMat();
 
@@ -209,7 +207,7 @@ public class SPL {
                 for (int i = A.GetFirstIdxBrs(M); i <= A.GetLastIdxBrs(A); i++) {
                     Aj.Mat[i][j] = B.Mat[i][0];
                 }
-                
+
                 x[j] = Aj.DeterminanCofaktor(Aj) / detA;
             }
 

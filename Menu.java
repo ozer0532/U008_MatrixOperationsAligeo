@@ -10,7 +10,7 @@ class Menu {
 
         Matriks M = new Matriks(n, m);
         M.BacaMat();
-
+        s.close();
         return M;
     }
 
@@ -30,7 +30,7 @@ class Menu {
         System.out.print("Masukan: ");
 
         result = s.nextInt();
-
+        s.close();
         return result;
     }
 
@@ -43,7 +43,7 @@ class Menu {
         System.out.print("Masukan: ");
 
         int result = s.nextInt();
-
+        s.close();
         return result;
     }
 
@@ -54,7 +54,7 @@ class Menu {
         System.out.print("Masukan: ");
 
         int result = s.nextInt();
-
+        s.close();
         return result;
     }
 
@@ -65,7 +65,7 @@ class Menu {
         System.out.print("Masukan: ");
 
         int result = s.nextInt();
-
+        s.close();
         return result;
     }
 

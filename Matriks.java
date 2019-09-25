@@ -93,6 +93,16 @@ public class Matriks {
         return I;
     }
 
+    public static Matriks Hilbert(int N) {
+        Matriks H = new Matriks(N, N);
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                H.Mat[i][j] = 1/(i+j+1);
+            }
+        }
+        return H;
+    }
+
     /* ********** INPUT/OUTPUT MATRIKS ********** */
     // Baca Matriks
     public void BacaMat() {

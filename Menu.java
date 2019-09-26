@@ -10,7 +10,7 @@ class Menu {
 
         Matriks M = new Matriks(n, m);
         M.BacaMat();
-        s.close();
+
         return M;
     }
 
@@ -30,7 +30,18 @@ class Menu {
         System.out.print("Masukan: ");
 
         result = s.nextInt();
-        s.close();
+
+        return result;
+    }
+
+    public static int menuInput() {
+        Scanner s = new Scanner(System.in);
+        System.out.println("\n1. Input dari Keyboard");
+        System.out.println("2. Input dari File\n==============");
+        System.out.print("Masukan: ");
+
+        int result = s.nextInt();
+
         return result;
     }
 
@@ -43,7 +54,7 @@ class Menu {
         System.out.print("Masukan: ");
 
         int result = s.nextInt();
-        s.close();
+
         return result;
     }
 
@@ -54,7 +65,7 @@ class Menu {
         System.out.print("Masukan: ");
 
         int result = s.nextInt();
-        s.close();
+
         return result;
     }
 
@@ -65,7 +76,7 @@ class Menu {
         System.out.print("Masukan: ");
 
         int result = s.nextInt();
-        s.close();
+
         return result;
     }
 
@@ -112,6 +123,9 @@ class Menu {
                 M.TulisMat();
                 M.MatCofaktor();
                 M.TulisMat();
+            } else if (menu == 6) {
+                Matriks Mi = new Matriks(InputFile.BacaFile());
+                Mi.TulisMat();
             } else if (menu == 7) {
                 break;
             } else {

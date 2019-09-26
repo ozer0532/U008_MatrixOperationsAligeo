@@ -172,7 +172,7 @@ public class SPL {
                 System.out.println(suffix + (i + 1) + " = " + X.Mat[i][0]);
             }
         } else {
-            System.out.println("SPL tidak dapat diselesaikan dengan metode Invers");
+            System.out.println("SPL tersebut tidak memiliki solusi");
         }
 
     }

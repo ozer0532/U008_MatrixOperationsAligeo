@@ -22,6 +22,5 @@ public class Interpolasi {
 
         SPL.SPLGauss(A, "a");
 
-        scanner.close();
     }
 }

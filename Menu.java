@@ -2,7 +2,7 @@ import java.util.*;
 
 class Menu {
 
-    public static int menu() {
+    public static int menu() throws NoSuchElementException {
         Scanner s = new Scanner(System.in);
         int result = 0;
 

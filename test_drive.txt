@@ -1,0 +1,9 @@
+Bener :
+    Determinan OBE
+    Determinan Kofaktor
+    Matriks Kofaktor
+    Matriks Adjoin
+
+
+Wierd Behavior :
+    Interpolasi Polinom - fixed throws NoSuchException di menu

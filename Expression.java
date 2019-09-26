@@ -90,4 +90,8 @@ public class Expression {
         }
         return true;
     }
+
+    public static void ResetVars() {
+        accVarIndex = 1;
+    }
 }

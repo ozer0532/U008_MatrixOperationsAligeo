@@ -332,8 +332,12 @@ public class Matriks {
     }
 
     public void Adjoin() {
-        this.MatCofaktor();
-        this.Transpose();
+        if (this.NbElmt(this) != 1) {
+            this.MatCofaktor();
+            this.Transpose();
+        } else {
+            this.Mat[0][0] = 1;
+        }
     }
 
     public static boolean InversGaussJordan(Matriks in, Matriks out) {

@@ -75,6 +75,8 @@ public class SPL {
             }
         }
 
+        Expression.ResetVars();
+
     }
 
     public static void SPLGaussJordan(String suffix) {
@@ -140,6 +142,8 @@ public class SPL {
                 System.out.println(suffix + (i + 1) + " = " + hasil[i].ToString());
             }
         }
+
+        Expression.ResetVars();
 
     }
 

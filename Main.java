@@ -14,6 +14,6 @@ public class Main {
         // String file = "mat.txt";
         // Matriks M = new Matriks(file);
         // M.TulisMat();
-        // scanner.close();
+        scanner.close();
     }
 }

@@ -1,5 +1,4 @@
 import java.util.*;
-import java.io.*;
 
 public class SPL {
     static Scanner scanner = new Scanner(System.in);
@@ -225,7 +224,7 @@ public class SPL {
     }
 
 
-    //Studi kasus Hilbert
+    //Studi kasus
     public static void SPLCramer1(Matriks M, int n, String suffix) {
 
         // SPLIT INPUT

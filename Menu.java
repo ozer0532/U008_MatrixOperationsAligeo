@@ -111,7 +111,7 @@ class Menu {
                 if (invers == 1) {
                     Invers.InversAdjoin();
                 } else if (invers == 2) {
-                    Invers.InversGaussJordan();
+                    Invers.InversGaussJordan();;
                 } else {
                     System.out.println("Perintah tidak tersedia");
                 }

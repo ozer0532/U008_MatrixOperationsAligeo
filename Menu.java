@@ -68,6 +68,17 @@ class Menu {
         return result;
     }
 
+    public static void outputFile(Matriks M) {
+        Scanner s = new Scanner(System.in);
+        System.out.print("Apakah Anda ingin menyimpannya dalam file (y/n)? ");
+        char a = s.next().charAt(0);
+        if (a == 'y' || a == 'Y') {
+            System.out.print("Masukan nama file (.txt): ");
+            String file = s.next();
+            Matriks.TulisFile(file, M);
+        }
+    }
+
     public static void Run() {
         boolean jalan = true;
         int menu, spl, determinan, invers;
@@ -111,6 +122,7 @@ class Menu {
                 M.MatCofaktor();
                 System.out.println();
                 M.TulisMat();
+                outputFile(M);
             } else if (menu == 5) {
                 Matriks M = Input.InputMatriks(true);
 

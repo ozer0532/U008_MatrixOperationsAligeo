@@ -66,24 +66,6 @@ public class Matriks {
             this.Baris = Baris + 1;
             this.Kolom = Kolom;
         }
-
-        // while (input.hasNext()) {
-        // if (input.hasNextInt()) {
-        // this.Kolom++;
-        // }
-        // input.next();
-        // }
-
-        // this.Mat = new double[this.Baris][this.Kolom];
-
-        // input.close();
-
-        // input = new Scanner(new File(file_name));
-        // for (int i = BrsMin; i < this.Baris; i++)
-        // for (int j = KolMin; j < this.Kolom; j++) {
-        // this.Mat[i][j] = input.nextInt();
-        // }
-        // input.close();
     }
 
     /* ********** SELEKTOR ********** */
@@ -553,6 +535,30 @@ public class Matriks {
             for (int j = 0; j < Kolom; j++) {
                 Mat[i][j] = Approximate(Mat[i][j]);
             }
+        }
+    }
+
+    public static void TulisFile(String file, Matriks M) {
+        try {
+            File F = new File(file);
+            if (!(F.exists())) {
+                F.createNewFile();
+            }
+
+            FileWriter FF = new FileWriter(file);
+            PrintWriter print = new PrintWriter(FF);
+
+            for (int i = 0; i < M.Baris; i++) {
+                for (int j = 0; j < M.Kolom; j++) {
+                    M.Mat[i][j] += 0;
+                    print.printf("%.2f ", M.Mat[i][j]);
+                }
+                print.printf("\n");
+            }
+
+            print.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

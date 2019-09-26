@@ -223,4 +223,44 @@ public class SPL {
             System.out.println("SPL tersebut tidak memiliki solusi");
         }
     }
+
+
+    //Studi kasus Hilbert
+    public static void SPLCramer1(Matriks M, int n, String suffix) {
+
+        // SPLIT INPUT
+        Matriks A = new Matriks(n, n);
+        for (int i = A.GetFirstIdxBrs(A); i <= A.GetLastIdxBrs(A); i++) {
+            for (int j = A.GetFirstIdxKol(A); j <= A.GetLastIdxKol(A); j++) {
+                A.Mat[i][j] = M.Mat[i][j];
+            }
+        }
+
+        Matriks B = new Matriks(n, 1);
+        for (int i = B.GetFirstIdxBrs(B); i <= B.GetLastIdxBrs(B); i++) {
+            B.Mat[i][0] = M.Mat[i][n];
+        }
+
+        // PROSES & OUTPUT
+        double detA = A.DeterminanCofaktor(A);
+        if (detA != 0) {
+            double[] x = new double[n];
+            for (int j = A.GetFirstIdxKol(A); j <= A.GetLastIdxKol(A); j++) {
+                Matriks Aj = new Matriks(n, n);
+                Matriks.Copy(A, Aj);
+                for (int i = A.GetFirstIdxBrs(M); i <= A.GetLastIdxBrs(A); i++) {
+                    Aj.Mat[i][j] = B.Mat[i][0];
+                }
+
+                x[j] = Aj.DeterminanCofaktor(Aj) / detA;
+            }
+
+            // OUTPUT
+            for (int i = 0; i < n; i++) {
+                System.out.println(suffix + (i + 1) + " = " + x[i]);
+            }
+        } else {
+            System.out.println("SPL tersebut tidak memiliki solusi");
+        }
+    }
 }

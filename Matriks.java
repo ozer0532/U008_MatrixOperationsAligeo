@@ -98,10 +98,10 @@ public class Matriks {
     }
 
     public static Matriks Hilbert(int N) {
-        Matriks H = new Matriks(N, N);
+        Matriks H = new Matriks(N, N+1);
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
-                H.Mat[i][j] = 1 / (i + j + 1);
+                H.Mat[i][j] = 1.0 / (i + j + 1);
             }
         }
         return H;
@@ -564,5 +564,8 @@ public class Matriks {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    public void h(){
+        this.Mat[BrsMin][GetLastIdxKol(this)] = 1;
     }
 }

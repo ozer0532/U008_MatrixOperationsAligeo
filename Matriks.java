@@ -35,8 +35,7 @@ public class Matriks {
                 this.Mat[i][j] = Mat[i][j];
     }
 
-    public Matriks(String file_name) throws FileNotFoundException {
-
+    public Matriks(String file_name) throws FileNotFoundException {// Membaca Matriks dari sebuah file
         ArrayList<ArrayList<Double>> Mat = new ArrayList<ArrayList<Double>>();
         File file = new File(file_name);
         Scanner input = new Scanner(file);
@@ -110,6 +109,7 @@ public class Matriks {
     /* ********** INPUT/OUTPUT MATRIKS ********** */
     // Baca Matriks
     public void BacaMat() {
+        System.out.println("Silahkan masukan Matriks : ");
         for (int i = 0; i < this.Baris; i++) {
             for (int j = 0; j < this.Kolom; j++) {
                 this.Mat[i][j] = scanner.nextDouble();

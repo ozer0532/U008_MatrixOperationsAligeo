@@ -37,31 +37,53 @@ public class Matriks {
 
     // Tolong di cek, size udah bener input blm mau
     public Matriks(String file_name) throws FileNotFoundException {
-        Scanner input = new Scanner(new File(file_name));
-        this.Baris = BrsMin;
-        this.Kolom = KolMin;
+        ArrayList<ArrayList<Double>> Mat = new ArrayList<ArrayList<Double>>();
+        File file = new File(file_name);
+        Scanner input = new Scanner(file);
+        int Baris = -1;
+        int Kolom = -1;
         while (input.hasNextLine()) {
-            this.Baris++;
-            input.nextLine();
+            Baris++;
+            Mat.add(new ArrayList<Double>());
+            String baris = input.nextLine();
+            Scanner scanBaris = new Scanner(baris);
+            while (scanBaris.hasNextDouble()) {
+                Double element = scanBaris.nextDouble();
+                Mat.get(Baris).add(element);
+            }
         }
 
-        while (input.hasNext()) {
-            if (input.hasNextInt()) {
-                this.Kolom++;
+        if (Baris == 0) {
+            System.out.println("Tidak dapat membaca file");
+        } else {
+            Kolom = Mat.get(0).size();
+            this.Mat = new double[Mat.size()][Mat.get(0).size()];
+            for (int i = BrsMin; i <= Baris; i++) {
+                for (int j = KolMin; j < Kolom; j++) {
+                    this.Mat[i][j] = Mat.get(i).get(j);
+                }
             }
-            input.next();
+            this.Baris = Baris + 1;
+            this.Kolom = Kolom;
         }
 
-        this.Mat = new double[this.Baris][this.Kolom];
+        // while (input.hasNext()) {
+        // if (input.hasNextInt()) {
+        // this.Kolom++;
+        // }
+        // input.next();
+        // }
 
-        input.close();
+        // this.Mat = new double[this.Baris][this.Kolom];
 
-        input = new Scanner(new File(file_name));
-        for (int i = BrsMin; i < this.Baris; i++)
-            for (int j = KolMin; j < this.Kolom; j++) {
-                this.Mat[i][j] = input.nextInt();
-            }
-        input.close();
+        // input.close();
+
+        // input = new Scanner(new File(file_name));
+        // for (int i = BrsMin; i < this.Baris; i++)
+        // for (int j = KolMin; j < this.Kolom; j++) {
+        // this.Mat[i][j] = input.nextInt();
+        // }
+        // input.close();
     }
 
     /* ********** SELEKTOR ********** */

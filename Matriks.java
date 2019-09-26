@@ -375,8 +375,8 @@ public class Matriks {
         Copy(in, out);
         double det = DeterminanCofaktor(out);
         if (det != 0) {
+            out.Adjoin();
             out.Kali(1 / det);
-            out.Approximate();
             return true;
         } else {
             return false;

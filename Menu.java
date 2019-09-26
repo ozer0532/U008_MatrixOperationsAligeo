@@ -2,18 +2,6 @@ import java.util.*;
 
 class Menu {
 
-    private static Matriks inpuMatriks() {
-        Scanner s = new Scanner(System.in);
-
-        int n = s.nextInt();
-        int m = s.nextInt();
-
-        Matriks M = new Matriks(n, m);
-        M.BacaMat();
-
-        return M;
-    }
-
     public static int menu() {
         Scanner s = new Scanner(System.in);
         int result = 0;
@@ -21,8 +9,8 @@ class Menu {
         System.out.println("\nMenu");
         System.out.println("1. Sistem Persamaan Linier");
         System.out.println("2. Determinan");
-        System.out.println("3. Matriks balikan");
-        System.out.println("4. Matriks kofaktor");
+        System.out.println("3. Matriks Balikan");
+        System.out.println("4. Matriks Kofaktor");
         System.out.println("5. Adjoin");
         System.out.println("6. Interpolasi Polinom");
         System.out.println("7. Keluar\n==============");
@@ -45,11 +33,11 @@ class Menu {
         return result;
     }
 
-    public static int pilihan1() {
+    public static int spl() {
         Scanner s = new Scanner(System.in);
-        System.out.println("\n1. Metode eliminasi Gauss");
-        System.out.println("2. Metode eliminasi Gauss-Jordan");
-        System.out.println("3. Metode matriks balikan");
+        System.out.println("\n1. Metode Eliminasi Gauss");
+        System.out.println("2. Metode Eliminasi Gauss-Jordan");
+        System.out.println("3. Metode Matriks Balikan");
         System.out.println("4. Kaidah Cramer\n==============");
         System.out.print("Masukan: ");
 
@@ -58,10 +46,10 @@ class Menu {
         return result;
     }
 
-    public static int pilihan2() {
+    public static int determinan() {
         Scanner s = new Scanner(System.in);
-        System.out.println("\n1. Metode OBE");
-        System.out.println("2. Metode eliminasi Gauss-Jordan\n==============");
+        System.out.println("\n1. Metode Operasi Baris Elementer");
+        System.out.println("2. Metode Matriks Kofaktor\n==============");
         System.out.print("Masukan: ");
 
         int result = s.nextInt();
@@ -69,10 +57,10 @@ class Menu {
         return result;
     }
 
-    public static int pilihan3() {
+    public static int invers() {
         Scanner s = new Scanner(System.in);
         System.out.println("\n1. Metode Adjoin");
-        System.out.println("2. Metode eliminasi Gauss-Jordan\n==============");
+        System.out.println("2. Metode Eliminasi Gauss-Jordan\n==============");
         System.out.print("Masukan: ");
 
         int result = s.nextInt();
@@ -82,50 +70,54 @@ class Menu {
 
     public static void Run() {
         boolean jalan = true;
-        int menu, Pilihan1, Pilihan2, Pilihan3;
+        int menu, spl, determinan, invers;
         while (jalan) {
             menu = Menu.menu();
             if (menu == 1) {
-                Pilihan1 = Menu.pilihan1();
-                if (Pilihan1 == 1) {
+                spl = Menu.spl();
+                if (spl == 1) {
                     SPL.SPLGauss("x");
-                } else if (Pilihan1 == 2) {
+                } else if (spl == 2) {
                     SPL.SPLGaussJordan("x");
-                } else if (Pilihan1 == 3) {
+                } else if (spl == 3) {
                     SPL.SPLInvers("x");
-                } else if (Pilihan1 == 4) {
+                } else if (spl == 4) {
                     SPL.SPLCramer("x");
                 } else {
                     System.out.println("Perintah tidak tersedia");
                 }
             } else if (menu == 2) {
-                Pilihan2 = Menu.pilihan2();
-                if (Pilihan2 == 1) {
+                determinan = Menu.determinan();
+                if (determinan == 1) {
                     Determinan.DeterminanOBE();
-                } else if (Pilihan2 == 2) {
-                    System.out.println("Perintah 2");
+                } else if (determinan == 2) {
+                    Determinan.DeterminanCofaktor();
                 } else {
                     System.out.println("Perintah tidak tersedia");
                 }
             } else if (menu == 3) {
-                Pilihan3 = Menu.pilihan3();
-                if (Pilihan3 == 1) {
+                invers = Menu.invers();
+                if (invers == 1) {
 
-                } else if (Pilihan3 == 2) {
+                } else if (invers == 2) {
 
                 } else {
                     System.out.println("Perintah tidak tersedia");
                 }
             } else if (menu == 4) {
-
-                Matriks M = Menu.inpuMatriks();
+                Matriks M = Input.InputMatriks(true);
 
                 M.TulisMat();
                 M.MatCofaktor();
+                System.out.println();
+                M.TulisMat();
+            } else if (menu == 5) {
+                Matriks M = Input.InputMatriks(true);
+
+                M.Adjoin();
                 M.TulisMat();
             } else if (menu == 6) {
-                Matriks Mi = new Matriks(InputFile.BacaFile());
-                Mi.TulisMat();
+                Interpolasi.Cari();
             } else if (menu == 7) {
                 break;
             } else {

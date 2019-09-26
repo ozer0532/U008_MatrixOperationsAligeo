@@ -1,10 +1,13 @@
 import java.util.*;
+import java.io.*;
 
 public class SPL {
     static Scanner scanner = new Scanner(System.in);
 
     public static void SPLGauss(String suffix) {
+        System.out.print("Masukan m : ");
         int m = scanner.nextInt();
+        System.out.print("Masukan n : ");
         int n = scanner.nextInt();
         Matriks M = new Matriks(m, n + 1);
 
@@ -77,8 +80,9 @@ public class SPL {
     public static void SPLGaussJordan(String suffix) {
 
         boolean tidakBernilai = false;
-
+        System.out.print("Masukan m : ");
         int m = scanner.nextInt();
+        System.out.print("Masukan n : ");
         int n = scanner.nextInt();
         Matriks M = new Matriks(m, n + 1);
 
@@ -140,7 +144,7 @@ public class SPL {
     }
 
     public static void SPLInvers(String suffix) {
-
+        System.out.print("Masukan m : ");
         int n = scanner.nextInt();
         Matriks M = new Matriks(n, n + 1);
 
@@ -174,7 +178,7 @@ public class SPL {
     }
 
     public static void SPLCramer(String suffix) {
-
+        System.out.print("Masukan m : ");
         int n = scanner.nextInt();
         Matriks M = new Matriks(n, n + 1);
 

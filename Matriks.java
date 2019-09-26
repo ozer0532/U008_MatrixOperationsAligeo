@@ -12,8 +12,8 @@ public class Matriks {
     public int BrsMin = 0;
     public int KolMax = 100;
     public int BrsMax = 100;
-    private int Baris; // Baris
-    private int Kolom; // Kolom
+    public int Baris; // Baris
+    public int Kolom; // Kolom
     public double[][] Mat; // isi array, double biar threadsafe
     // Manggil isi matriks-nya matriks.Mat[Baris][Kolom]
     // Indeks Baris & Kolom mulai dari 0
@@ -35,8 +35,8 @@ public class Matriks {
                 this.Mat[i][j] = Mat[i][j];
     }
 
-    // Tolong di cek, size udah bener input blm mau
     public Matriks(String file_name) throws FileNotFoundException {
+
         ArrayList<ArrayList<Double>> Mat = new ArrayList<ArrayList<Double>>();
         File file = new File(file_name);
         Scanner input = new Scanner(file);
@@ -98,7 +98,7 @@ public class Matriks {
     }
 
     public static Matriks Hilbert(int N) {
-        Matriks H = new Matriks(N, N+1);
+        Matriks H = new Matriks(N, N + 1);
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
                 H.Mat[i][j] = 1.0 / (i + j + 1);
@@ -565,7 +565,8 @@ public class Matriks {
             e.printStackTrace();
         }
     }
-    public void h(){
+
+    public void h() {
         this.Mat[BrsMin][GetLastIdxKol(this)] = 1;
     }
 }

@@ -79,8 +79,6 @@ public class SPL {
     }
 
     public static void SPLGaussJordan(String suffix) {
-
-        boolean tidakBernilai = false;
         System.out.print("Masukan m : ");
         int m = scanner.nextInt();
         System.out.print("Masukan n : ");
@@ -88,6 +86,16 @@ public class SPL {
         Matriks M = new Matriks(m, n + 1);
 
         M.BacaMat();
+
+        SPLGaussJordan(M, suffix);
+    }
+
+    public static void SPLGaussJordan(Matriks M, String suffix) {
+
+        boolean tidakBernilai = false;
+
+        int m = M.Baris;
+        int n = M.Kolom - 1;
 
         M = Matriks.EliminasiGaussJordan(M);
 
@@ -153,6 +161,12 @@ public class SPL {
 
         M.BacaMat();
 
+        SPLInvers(M, suffix);
+    }
+
+    public static void SPLInvers(Matriks M, String suffix) {
+        int n = M.Baris;
+
         // SPLIT INPUT
         Matriks A = new Matriks(n, n);
         for (int i = A.GetFirstIdxBrs(A); i <= A.GetLastIdxBrs(A); i++) {
@@ -186,6 +200,12 @@ public class SPL {
         Matriks M = new Matriks(n, n + 1);
 
         M.BacaMat();
+
+        SPLCramer(M, suffix);
+    }
+
+    public static void SPLCramer(Matriks M, String suffix) {
+        int n = M.Baris;
 
         // SPLIT INPUT
         Matriks A = new Matriks(n, n);
@@ -223,8 +243,7 @@ public class SPL {
         }
     }
 
-
-    //Studi kasus
+    // Studi kasus
     public static void SPLCramer1(Matriks M, int n, String suffix) {
 
         // SPLIT INPUT

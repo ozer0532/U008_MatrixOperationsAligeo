@@ -33,6 +33,15 @@ class Menu {
         return result;
     }
 
+    public static String inputFile() {
+        Scanner s = new Scanner(System.in);
+        System.out.print("\nMasukkan nama file(.txt): ");
+
+        String result = s.nextLine();
+
+        return result;
+    }
+
     public static int spl() {
         Scanner s = new Scanner(System.in);
         System.out.println("\n1. Metode Eliminasi Gauss");
@@ -80,18 +89,54 @@ class Menu {
     }
 
     public static void Run() {
+        Scanner s = new Scanner(System.in);
         boolean jalan = true;
         int menu, spl, determinan, invers;
+        Matriks Mspl;
         while (jalan) {
             menu = Menu.menu();
             if (menu == 1) {
                 spl = Menu.spl();
                 if (spl == 1) {
-                    SPL.SPLGauss("x");
+                    int inputspl = menuInput();
+                    if (inputspl == 1) {
+                        SPL.SPLGauss("x");
+                    } else if (inputspl == 2) {
+                        String filename = inputFile();
+                        try {
+                            Mspl = new Matriks(filename);
+                            SPL.SPLGauss(Mspl, "x");
+                        } catch (Exception e) {
+                            System.out.println(e.getMessage());
+                        }
+                    }
                 } else if (spl == 2) {
-                    SPL.SPLGaussJordan("x");
+                    int inputspl = menuInput();
+                    if (inputspl == 1) {
+                        SPL.SPLGaussJordan("x");
+                    } else if (inputspl == 2) {
+                        String filename = inputFile();
+                        try {
+                            Mspl = new Matriks(filename);
+                            SPL.SPLGaussJordan(Mspl, "x");
+                        } catch (Exception e) {
+                            System.out.println(e.getMessage());
+                        }
+                    }
+
                 } else if (spl == 3) {
-                    SPL.SPLInvers("x");
+                    int inputspl = menuInput();
+                    if (inputspl == 1) {
+                        SPL.SPLInvers("x");
+                    } else if (inputspl == 2) {
+                        String filename = inputFile();
+                        try {
+                            Mspl = new Matriks(filename);
+                            SPL.SPLInvers(Mspl, "x");
+                        } catch (Exception e) {
+                            System.out.println(e.getMessage());
+                        }
+                    }
                 } else if (spl == 4) {
                     SPL.SPLCramer("x");
                 } else {
@@ -111,7 +156,7 @@ class Menu {
                 if (invers == 1) {
                     Invers.InversAdjoin();
                 } else if (invers == 2) {
-                    Invers.InversGaussJordan();;
+                    Invers.InversGaussJordan();
                 } else {
                     System.out.println("Perintah tidak tersedia");
                 }
@@ -135,6 +180,13 @@ class Menu {
             } else {
                 System.out.println();
                 System.out.println("Menu Tidak Valid");
+            }
+
+            System.out.println();
+            System.out.print("Memulai lagi(y/n) ? ");
+            char mulai = s.next().charAt(0);
+            if (mulai != 'y' && mulai != 'Y') {
+                jalan = false;
             }
         }
     }

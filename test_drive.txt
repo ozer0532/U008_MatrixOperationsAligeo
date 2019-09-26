@@ -7,3 +7,7 @@ Bener :
 
 Wierd Behavior :
     Interpolasi Polinom - fixed throws NoSuchException di menu
+
+Studi Kasus :
+    1b salah
+    

@@ -109,9 +109,9 @@ class Menu {
             } else if (menu == 3) {
                 invers = Menu.invers();
                 if (invers == 1) {
-
+                    Invers.InversAdjoin();
                 } else if (invers == 2) {
-
+                    Invers.InversGaussJordan();
                 } else {
                     System.out.println("Perintah tidak tersedia");
                 }

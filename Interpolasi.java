@@ -3,7 +3,7 @@ import java.util.*;
 public class Interpolasi {
     public static void Cari () {
         Scanner scanner = new Scanner(System.in);
-
+        System.out.print("Masukan n : ");
         int n = scanner.nextInt();
         Matriks M = new Matriks(n, 2);
 
